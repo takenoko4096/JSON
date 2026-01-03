@@ -185,4 +185,14 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
 
         return array;
     }
+
+    public static JSONArray valueOf(Iterable<?> iterable) {
+        final List<JSONValue<?>> list = new ArrayList<>();
+
+        for (final var e : iterable) {
+            list.add(valueOf(e));
+        }
+
+        return new JSONArray(list);
+    }
 }

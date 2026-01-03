@@ -182,4 +182,14 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
             throw new IllegalStateException(e);
         }
     }
+
+    public static JSONObject valueOf(Map<?, ?> value) {
+        final var map = new HashMap<String, JSONValue<?>>();
+
+        for (final var kv : value.entrySet()) {
+            map.put(kv.getKey().toString(), JSONValue.valueOf(kv.getValue()));
+        }
+
+        return new JSONObject(map);
+    }
 }

@@ -17,7 +17,7 @@ public final class JSONValueTypes {
         @Override
         public JSONBoolean toJSON(@Nullable Object value) {
             if (value instanceof JSONBoolean v) return v;
-            else if (value instanceof Boolean v) return JSONBoolean.valueOf(v);
+            else if (value instanceof Boolean v) return JSONBoolean.valueOf((boolean) v);
             else throw new IllegalArgumentException("value is not a boolean value");
         }
     };
