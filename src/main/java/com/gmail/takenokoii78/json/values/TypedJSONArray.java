@@ -2,7 +2,6 @@ package com.gmail.takenokoii78.json.values;
 
 import com.gmail.takenokoii78.json.JSONValue;
 import com.gmail.takenokoii78.json.JSONValueType;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> i
         this.type = type;
     }
 
-    public TypedJSONArray(JSONValueType<T> type, @NotNull List<T> list) {
+    public TypedJSONArray(JSONValueType<T> type, List<T> list) {
         super(new ArrayList<>(list));
         this.type = type;
     }

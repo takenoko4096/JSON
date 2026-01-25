@@ -4,23 +4,22 @@ import com.gmail.takenokoii78.mojangson.values.MojangsonArray;
 import com.gmail.takenokoii78.mojangson.values.MojangsonCompound;
 import com.gmail.takenokoii78.mojangson.values.MojangsonList;
 import com.gmail.takenokoii78.mojangson.values.MojangsonStructure;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
+@NullMarked
 public final class MojangsonPath {
     private final MojangsonPathNode<?, ?> root;
 
-    MojangsonPath(@NotNull MojangsonPathNode<?, ?> root) {
+    MojangsonPath(MojangsonPathNode<?, ?> root) {
         this.root = root;
     }
 
-    private @Nullable MojangsonValue<?> getNextValue(@NotNull MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p) {
+    private @Nullable MojangsonValue<?> getNextValue(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p) {
         switch (node) {
             case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(p instanceof MojangsonCompound object)) {
@@ -50,7 +49,7 @@ public final class MojangsonPath {
         }
     }
 
-    private <U> @Nullable U useNextValue(@NotNull MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p, BiFunction<MojangsonStructure, Object, U> function) {
+    private <U> @Nullable U useNextValue(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p, BiFunction<MojangsonStructure, Object, U> function) {
         switch (node) {
             case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(p instanceof MojangsonCompound object)) {
@@ -59,6 +58,10 @@ public final class MojangsonPath {
                 return objectKeyNode.access(object, function::apply);
             }
             case MojangsonPathNode.ArrayIndexNode arrayIndexNode -> {
+                if (p == null) {
+                    throw new IllegalArgumentException();
+                }
+
                 return switch (p) {
                     case MojangsonList list -> arrayIndexNode.access(list, function::apply);
                     case MojangsonArray<?, ?> array -> arrayIndexNode.access(array.listView(), function::apply);
@@ -81,7 +84,7 @@ public final class MojangsonPath {
         }
     }
 
-    private <U> @Nullable U onLastNode(@NotNull MojangsonCompound compound, @NotNull BiFunction<MojangsonStructure, Object, U> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
+    private <U> @Nullable U onLastNode(MojangsonCompound compound, BiFunction<MojangsonStructure, Object, U> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
         MojangsonPathNode<?, ?> node = root;
         MojangsonValue<?> p = compound;
 
@@ -105,7 +108,7 @@ public final class MojangsonPath {
         return useNextValue(node, p, function);
     }
 
-    public <T> T access(@NotNull MojangsonCompound MojangsonCompound, @NotNull Function<MojangsonPathReference<?, ?>, T> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
+    public <T> @Nullable T access(MojangsonCompound MojangsonCompound, Function<MojangsonPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
         return onLastNode(MojangsonCompound, (lastStructure, nodeParameter) -> {
             final MojangsonPathReference<?, ?> reference = switch (lastStructure) {
                 case MojangsonCompound object -> new MojangsonPathReference.MojangsonCompoundPathReference(object, (String) nodeParameter);
@@ -129,7 +132,7 @@ public final class MojangsonPath {
         return i;
     }
 
-    public @NotNull MojangsonPath slice(int begin, int end) {
+    public MojangsonPath slice(int begin, int end) {
         if (begin < 0 || end > length() || begin > end) {
             throw new IllegalArgumentException("インデックスが範囲外です");
         }
@@ -152,12 +155,16 @@ public final class MojangsonPath {
             node = node.child;
         }
 
+        if (node == null) {
+            throw new IllegalStateException("NEVER HAPPENS");
+        }
+
         node.child = null;
 
         return new MojangsonPath(beginNode);
     }
 
-    public @NotNull MojangsonPath parent() {
+    public MojangsonPath parent() {
         return slice(0, length() - 2);
     }
 
@@ -192,7 +199,7 @@ public final class MojangsonPath {
         else return toString().equals(obj.toString());
     }
 
-    public static @NotNull MojangsonPath of(@NotNull String path) throws MojangsonParseException {
+    public static MojangsonPath of(String path) throws MojangsonParseException {
         return MojangsonPathParser.parse(path);
     }
 
@@ -201,23 +208,23 @@ public final class MojangsonPath {
 
         protected final T parameter;
 
-        protected MojangsonPathReference(@NotNull S structure, @NotNull T parameter) {
+        protected MojangsonPathReference(S structure, T parameter) {
             this.structure = structure;
             this.parameter = parameter;
         }
 
         public abstract boolean has();
 
-        public abstract @NotNull MojangsonValueType<?> getType();
+        public abstract MojangsonValueType<?> getType();
 
-        public abstract <U extends MojangsonValue<?>> @NotNull U get(@NotNull MojangsonValueType<U> type);
+        public abstract <U extends MojangsonValue<?>> U get(MojangsonValueType<U> type);
 
-        public abstract void set(@NotNull Object value);
+        public abstract void set(Object value);
 
         public abstract boolean delete();
 
         private static final class MojangsonCompoundPathReference extends MojangsonPathReference<MojangsonCompound, String> {
-            private MojangsonCompoundPathReference(@NotNull MojangsonCompound structure, @NotNull String parameter) {
+            private MojangsonCompoundPathReference(MojangsonCompound structure, String parameter) {
                 super(structure, parameter);
             }
 
@@ -226,19 +233,18 @@ public final class MojangsonPath {
                 return structure.has(parameter);
             }
 
-            @NotNull
             @Override
             public MojangsonValueType<?> getType() {
                 return structure.getTypeOf(parameter);
             }
 
             @Override
-            public <U extends MojangsonValue<?>> @NotNull U get(@NotNull MojangsonValueType<U> type) {
+            public <U extends MojangsonValue<?>> U get(MojangsonValueType<U> type) {
                 return structure.get(parameter, type);
             }
 
             @Override
-            public void set(@NotNull Object value) {
+            public void set(Object value) {
                 structure.set(parameter, value);
             }
 
@@ -249,7 +255,7 @@ public final class MojangsonPath {
         }
 
         private static final class MojangsonListPathReference extends MojangsonPathReference<MojangsonList, Integer> {
-            private MojangsonListPathReference(@NotNull MojangsonList structure, @NotNull Integer parameter) {
+            private MojangsonListPathReference(MojangsonList structure, Integer parameter) {
                 super(structure, parameter);
             }
 
@@ -258,19 +264,18 @@ public final class MojangsonPath {
                 return structure.has(parameter);
             }
 
-            @NotNull
             @Override
             public MojangsonValueType<?> getType() {
                 return structure.getTypeAt(parameter);
             }
 
             @Override
-            public <U extends MojangsonValue<?>> @NotNull U get(@NotNull MojangsonValueType<U> type) {
+            public <U extends MojangsonValue<?>> U get(MojangsonValueType<U> type) {
                 return structure.get(parameter, type);
             }
 
             @Override
-            public void set(@NotNull Object value) {
+            public void set(Object value) {
                 structure.set(parameter, value);
             }
 
@@ -282,7 +287,7 @@ public final class MojangsonPath {
     }
 
     public static final class MojangsonInaccessiblePathException extends Exception {
-        public MojangsonInaccessiblePathException(@NotNull Object nodeParameter) {
+        public MojangsonInaccessiblePathException(Object nodeParameter) {
             super("パスに対応する値へのアクセスに失敗しました: 条件 " + nodeParameter + " を満たすキーは存在しません");
         }
     }

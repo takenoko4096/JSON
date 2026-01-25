@@ -1,9 +1,10 @@
 package com.gmail.takenokoii78.mojangson;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.Objects;
 
+@NullMarked
 public abstract class MojangsonValue<T> {
     protected final T value;
 
@@ -25,7 +26,7 @@ public abstract class MojangsonValue<T> {
     }
 
     @Override
-    public @NotNull String toString() {
+    public String toString() {
         return value.toString();
     }
 }

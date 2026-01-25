@@ -1,11 +1,13 @@
 package com.gmail.takenokoii78.mojangson;
 
+import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
+@NullMarked
 public abstract class MojangsonValueType<T extends MojangsonValue<?>> {
     protected final Class<T> clazz;
 

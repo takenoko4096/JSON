@@ -1,20 +1,21 @@
 package com.gmail.takenokoii78.mojangson.values;
 
 import com.gmail.takenokoii78.mojangson.MojangsonValueTypes;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+@NullMarked
 public class MojangsonByteArray extends MojangsonArray<byte[], MojangsonByte> {
     public MojangsonByteArray(byte[] value) {
         super(value);
     }
 
     @Override
-    public @NotNull MojangsonByteArray copy() {
+    public MojangsonByteArray copy() {
         return from(listView());
     }
 
@@ -41,7 +42,7 @@ public class MojangsonByteArray extends MojangsonArray<byte[], MojangsonByte> {
     }
 
     @Override
-    public @NotNull Iterator<MojangsonByte> iterator() {
+    public Iterator<MojangsonByte> iterator() {
         final List<MojangsonByte> bytes = new ArrayList<>();
         for (final byte byteValue : value) {
             bytes.add(MojangsonByte.valueOf(byteValue));
@@ -50,23 +51,21 @@ public class MojangsonByteArray extends MojangsonArray<byte[], MojangsonByte> {
     }
 
     @Override
-    public @NotNull String toString() {
+    public String toString() {
         return "byte" + Arrays.toString(value);
     }
 
     @Override
-    public @NotNull byte[] toArray() {
+    public byte[] toArray() {
         return Arrays.copyOf(value, value.length);
     }
 
     @Override
-    public @NotNull MojangsonList listView() {
-        return getView((arr, ind, val) -> {
-            arr[ind] = (byte) val;
-        });
+    public MojangsonList listView() {
+        return getView((arr, ind, val) -> arr[ind] = (byte) val);
     }
 
-    public static @NotNull MojangsonByteArray from(@NotNull MojangsonList list) {
+    public static MojangsonByteArray from(MojangsonList list) {
         final byte[] bytes = new byte[list.length()];
 
         for (int i = 0; i < list.length(); i++) {

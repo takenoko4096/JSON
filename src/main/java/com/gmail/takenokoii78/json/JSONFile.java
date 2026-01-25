@@ -3,7 +3,6 @@ package com.gmail.takenokoii78.json;
 import com.gmail.takenokoii78.json.values.JSONArray;
 import com.gmail.takenokoii78.json.values.JSONObject;
 import com.gmail.takenokoii78.json.values.JSONStructure;
-import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NullMarked;
 
 import java.io.File;

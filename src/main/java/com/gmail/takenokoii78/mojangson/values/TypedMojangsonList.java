@@ -2,21 +2,22 @@ package com.gmail.takenokoii78.mojangson.values;
 
 import com.gmail.takenokoii78.mojangson.MojangsonValue;
 import com.gmail.takenokoii78.mojangson.MojangsonValueType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@NullMarked
 public class TypedMojangsonList<T extends MojangsonValue<?>> extends MojangsonValue<List<T>> implements MojangsonIterable<T> {
     private final MojangsonValueType<T> type;
 
-    public TypedMojangsonList(@NotNull MojangsonValueType<T> type, @NotNull List<T> list) {
+    public TypedMojangsonList(MojangsonValueType<T> type, List<T> list) {
         super(list);
         this.type = type;
     }
 
-    public TypedMojangsonList(@NotNull MojangsonValueType<T> type) {
+    public TypedMojangsonList(MojangsonValueType<T> type) {
         this(type, new ArrayList<>());
     }
 
@@ -100,12 +101,12 @@ public class TypedMojangsonList<T extends MojangsonValue<?>> extends MojangsonVa
     }
 
     @Override
-    public @NotNull TypedMojangsonList<T> copy() {
+    public TypedMojangsonList<T> copy() {
         return untyped().copy().typed(type);
     }
 
     @Override
-    public @NotNull Iterator<T> iterator() {
+    public Iterator<T> iterator() {
         final List<T> list = new ArrayList<>();
 
         for (int i = 0; i < this.value.size(); i++) {
@@ -115,7 +116,7 @@ public class TypedMojangsonList<T extends MojangsonValue<?>> extends MojangsonVa
         return list.iterator();
     }
 
-    public @NotNull MojangsonList untyped() {
+    public MojangsonList untyped() {
         final MojangsonList list = new MojangsonList();
         for (int i = 0; i < length(); i++) {
             list.add(get(i));
@@ -123,7 +124,6 @@ public class TypedMojangsonList<T extends MojangsonValue<?>> extends MojangsonVa
         return list;
     }
 
-    @NotNull
     @Override
     public String toString() {
         return type + super.toString();

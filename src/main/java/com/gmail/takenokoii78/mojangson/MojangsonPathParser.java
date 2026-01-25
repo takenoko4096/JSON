@@ -1,11 +1,12 @@
 package com.gmail.takenokoii78.mojangson;
 
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@NullMarked
 public class MojangsonPathParser {
     private static final Set<Character> WHITESPACE = Set.of(' ');
 
@@ -21,15 +22,15 @@ public class MojangsonPathParser {
 
     private static final String EMPTY_STRING = "";
 
-    private String text;
+    private final String text;
 
     private int location = -1;
 
-    private MojangsonPathParser() {
-
+    private MojangsonPathParser(String path) {
+        this.text = path;
     }
 
-    private @NotNull MojangsonParseException exception(@NotNull String message) {
+    private MojangsonParseException exception(String message) {
         return new MojangsonParseException(message, text, location);
     }
 
@@ -71,7 +72,7 @@ public class MojangsonPathParser {
         }
     }
 
-    private boolean test(@NotNull String next) {
+    private boolean test(String next) {
         if (isOver()) return false;
 
         whitespace();
@@ -85,7 +86,7 @@ public class MojangsonPathParser {
         return test(String.valueOf(next));
     }
 
-    private boolean next(@NotNull String next) {
+    private boolean next(String next) {
         if (isOver()) return false;
 
         whitespace();
@@ -105,7 +106,7 @@ public class MojangsonPathParser {
         return next(String.valueOf(next));
     }
 
-    private void expect(@NotNull String next) {
+    private void expect(String next) {
         if (!next(next)) {
             throw exception("期待された文字列は" + next + "でしたが、テストが偽を返しました(" + (isOver() ? "isOver!" : peek(false)) + ")");
         }
@@ -115,7 +116,7 @@ public class MojangsonPathParser {
         expect(String.valueOf(next));
     }
 
-    private @NotNull String string() {
+    private String string() {
         char current = peek(false);
         final StringBuilder string = new StringBuilder();
 
@@ -145,7 +146,7 @@ public class MojangsonPathParser {
         return string.toString();
     }
 
-    private @NotNull String[] objectKey(boolean isRoot) {
+    private String[] objectKey(boolean isRoot) {
         if (!isRoot) expect(DOT);
 
         final StringBuilder sb = new StringBuilder();
@@ -213,7 +214,7 @@ public class MojangsonPathParser {
         return new String[]{sb.toString()};
     }
 
-    private @NotNull String arrayIndex() {
+    private String arrayIndex() {
         expect(ARRAY_BRACES[0]);
 
         if (next(ARRAY_BRACES[1])) {
@@ -253,7 +254,7 @@ public class MojangsonPathParser {
         return sb.toString();
     }
 
-    private @NotNull MojangsonPathNode<?, ?> root() {
+    private MojangsonPathNode<?, ?> root() {
         final List<Object> list = new ArrayList<>();
 
         list.add(objectKey(true));
@@ -305,19 +306,14 @@ public class MojangsonPathParser {
         if (!isOver()) throw exception("解析終了後、末尾に無効な文字列(" + text.substring(location) + ")を検出しました");
     }
 
-    private @NotNull MojangsonPath parse() {
-        if (text == null) {
-            throw exception("textがnullです");
-        }
-
+    private MojangsonPath parse() {
         final MojangsonPathNode<?, ?> rootNode = root();
         extraChars();
         return new MojangsonPath(rootNode);
     }
 
-    protected static @NotNull MojangsonPath parse(@NotNull String path) throws MojangsonParseException {
-        final MojangsonPathParser parser = new MojangsonPathParser();
-        parser.text = path;
+    protected static MojangsonPath parse(String path) throws MojangsonParseException {
+        final MojangsonPathParser parser = new MojangsonPathParser(path);
         return parser.parse();
     }
 }

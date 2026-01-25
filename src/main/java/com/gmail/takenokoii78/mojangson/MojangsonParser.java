@@ -1,8 +1,8 @@
 package com.gmail.takenokoii78.mojangson;
 
 import com.gmail.takenokoii78.mojangson.values.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Function;
 
+@NullMarked
 public class MojangsonParser {
     private static final Set<Character> WHITESPACE = Set.of(' ', '\n');
 
@@ -75,17 +76,19 @@ public class MojangsonParser {
         SYMBOLS_ON_STRING.add(DECIMAL_POINT);
     }
 
-    private String text;
+    private final String text;
 
     private int location = 0;
 
-    private MojangsonParser() {}
+    private MojangsonParser(String text) {
+        this.text = text;
+    }
 
     private boolean isOver() {
         return location >= text.length();
     }
 
-    private @NotNull MojangsonParseException newException(@NotNull String message) {
+    private MojangsonParseException newException(String message) {
         return new MojangsonParseException(message, text, location);
     }
 
@@ -119,7 +122,7 @@ public class MojangsonParser {
         }
     }
 
-    private boolean test(@NotNull String next) {
+    private boolean test(String next) {
         if (isOver()) return false;
 
         whitespace();
@@ -133,7 +136,7 @@ public class MojangsonParser {
         return test(String.valueOf(next));
     }
 
-    private boolean next(@NotNull String next) {
+    private boolean next(String next) {
         if (isOver()) return false;
 
         whitespace();
@@ -153,7 +156,7 @@ public class MojangsonParser {
         return next(String.valueOf(next));
     }
 
-    private void expect(@NotNull String next) {
+    private void expect(String next) {
         if (!next(next)) {
             throw newException("期待された文字列は" + next + "でしたが、テストが偽を返しました");
         }
@@ -163,7 +166,7 @@ public class MojangsonParser {
         expect(String.valueOf(next));
     }
 
-    private @NotNull String string() {
+    private String string() {
         final StringBuilder sb = new StringBuilder();
         char current = next(true);
 
@@ -270,7 +273,7 @@ public class MojangsonParser {
         }
     }
 
-    private @NotNull MojangsonCompound compound() {
+    private MojangsonCompound compound() {
         expect(COMPOUND_BRACES[0]);
 
         final MojangsonCompound compound = new MojangsonCompound();
@@ -286,7 +289,7 @@ public class MojangsonParser {
         return compound;
     }
 
-    private @NotNull MojangsonIterable<?> iterable() {
+    private MojangsonIterable<?> iterable() {
         expect(ARRAY_LIST_BRACES[0]);
 
         final MojangsonList list = new MojangsonList();
@@ -312,7 +315,7 @@ public class MojangsonParser {
         return arrayConverter == null ? list : arrayConverter.apply(list);
     }
 
-    private void keyValues(@NotNull MojangsonCompound compound) {
+    private void keyValues(MojangsonCompound compound) {
         final String key = string();
         if (!next(COLON)) throw newException("コロンが必要です");
         compound.set(key, value());
@@ -324,7 +327,7 @@ public class MojangsonParser {
         else throw newException("閉じ括弧が見つかりません");
     }
 
-    private void elements(@NotNull MojangsonList list) {
+    private void elements(MojangsonList list) {
         list.add(value());
 
         final char commaOrBrace = next(true);
@@ -334,7 +337,7 @@ public class MojangsonParser {
         else throw newException("閉じ括弧が見つかりません");
     }
 
-    private @NotNull MojangsonValue<?> value() {
+    private MojangsonValue<?> value() {
         if (test(COMPOUND_BRACES[0])) {
             return compound();
         }
@@ -365,19 +368,14 @@ public class MojangsonParser {
         if (!isOver()) throw newException("解析終了後、末尾に無効な文字列(" + text.substring(location) + ")を検出しました");
     }
 
-    private @NotNull MojangsonValue<?> parse() {
-        if (text == null) {
-            throw newException("textがnullです");
-        }
-
+    private MojangsonValue<?> parse() {
         final MojangsonValue<?> value = value();
         remainingChars();
         return value;
     }
 
-    private static <T> @NotNull T parseAs(@NotNull String text, @NotNull Class<T> clazz) {
-        final MojangsonParser parser = new MojangsonParser();
-        parser.text = text;
+    private static <T> T parseAs(String text, Class<T> clazz) {
+        final MojangsonParser parser = new MojangsonParser(text);
         final MojangsonValue<?> value = parser.parse();
 
         if (clazz.isInstance(value)) {
@@ -386,27 +384,27 @@ public class MojangsonParser {
         else throw new IllegalStateException("期待された型(" + clazz.getName() + ")と取得した値(" + value.getClass().getName() + ")が一致しません");
     }
 
-    public static @NotNull MojangsonValue<?> object(@NotNull String text) throws MojangsonParseException {
+    public static MojangsonValue<?> object(String text) throws MojangsonParseException {
         return parseAs(text, MojangsonValue.class);
     }
 
-    public static @NotNull MojangsonCompound compound(@NotNull String text) throws MojangsonParseException {
+    public static MojangsonCompound compound(String text) throws MojangsonParseException {
         return parseAs(text, MojangsonCompound.class);
     }
 
-    public static @NotNull MojangsonList list(@NotNull String text) throws MojangsonParseException {
+    public static MojangsonList list(String text) throws MojangsonParseException {
         return parseAs(text, MojangsonList.class);
     }
 
-    public static @NotNull MojangsonByteArray byteArray(@NotNull String text) throws MojangsonParseException {
+    public static MojangsonByteArray byteArray(String text) throws MojangsonParseException {
         return parseAs(text, MojangsonByteArray.class);
     }
 
-    public static @NotNull MojangsonIntArray intArray(@NotNull String text) throws MojangsonParseException {
+    public static MojangsonIntArray intArray(String text) throws MojangsonParseException {
         return parseAs(text, MojangsonIntArray.class);
     }
 
-    public static @NotNull MojangsonLongArray longArray(@NotNull String text) throws MojangsonParseException {
+    public static MojangsonLongArray longArray(String text) throws MojangsonParseException {
         return parseAs(text, MojangsonLongArray.class);
     }
 }

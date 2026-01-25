@@ -1,8 +1,9 @@
 package com.gmail.takenokoii78.mojangson.values;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public final class MojangsonNull extends MojangsonPrimitive<Object> {
     private MojangsonNull() {
         super(null);
@@ -10,11 +11,11 @@ public final class MojangsonNull extends MojangsonPrimitive<Object> {
 
     @Override
     public @Nullable Object getValue() {
-        return super.getValue();
+        return null;
     }
 
     @Override
-    public @NotNull String toString() {
+    public String toString() {
         return "null";
     }
 

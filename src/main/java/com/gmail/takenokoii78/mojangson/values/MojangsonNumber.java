@@ -1,10 +1,11 @@
 package com.gmail.takenokoii78.mojangson.values;
 
 import com.gmail.takenokoii78.mojangson.MojangsonValueType;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public class MojangsonNumber<T extends Number> extends MojangsonPrimitive<T> {
-    protected MojangsonNumber(@NotNull T value) {
+    protected MojangsonNumber(T value) {
         super(value);
     }
 
@@ -32,7 +33,7 @@ public class MojangsonNumber<T extends Number> extends MojangsonPrimitive<T> {
         return value.doubleValue();
     }
 
-    public static @NotNull MojangsonNumber<?> upcastedValueOf(@NotNull Number value) {
+    public static MojangsonNumber<?> upcastedValueOf(Number value) {
         return (MojangsonNumber<?>) MojangsonValueType.get(value).toMojangson(value);
     }
 }

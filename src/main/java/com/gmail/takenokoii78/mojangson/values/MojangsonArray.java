@@ -1,13 +1,14 @@
 package com.gmail.takenokoii78.mojangson.values;
 
 import com.gmail.takenokoii78.mojangson.MojangsonValue;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NullMarked
 public abstract class MojangsonArray<T, U extends MojangsonValue<?>> extends MojangsonValue<T> implements MojangsonIterable<U> {
-    protected MojangsonArray(@NotNull T value) {
+    protected MojangsonArray(T value) {
         super(value);
 
         if (!value.getClass().isArray()) {
@@ -21,9 +22,9 @@ public abstract class MojangsonArray<T, U extends MojangsonValue<?>> extends Moj
         else return has(length() + index);
     }
 
-    public abstract @NotNull T toArray();
+    public abstract T toArray();
 
-    protected @NotNull MojangsonList getView(@NotNull TriConsumer<T, Integer, Object> setter) {
+    protected MojangsonList getView(TriConsumer<T, Integer, Object> setter) {
         final T array = value;
 
         final List<MojangsonValue<?>> values = new ArrayList<>();
@@ -58,13 +59,13 @@ public abstract class MojangsonArray<T, U extends MojangsonValue<?>> extends Moj
             }
 
             @Override
-            public @NotNull String toString() {
+            public String toString() {
                 return super.toString() + "(View of MojangsonArray)";
             }
         };
     }
 
-    public abstract @NotNull MojangsonList listView();
+    public abstract MojangsonList listView();
 
     @FunctionalInterface
     public interface TriConsumer<S, T, U> {

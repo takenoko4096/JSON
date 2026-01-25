@@ -3,14 +3,15 @@ package com.gmail.takenokoii78.mojangson.values;
 import com.gmail.takenokoii78.mojangson.MojangsonValue;
 import com.gmail.takenokoii78.mojangson.MojangsonValueType;
 import com.gmail.takenokoii78.mojangson.MojangsonValueTypes;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+@NullMarked
 public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> implements MojangsonIterable<MojangsonValue<?>> {
-    public MojangsonList(@NotNull List<MojangsonValue<?>> value) {
+    public MojangsonList(List<MojangsonValue<?>> value) {
         super(value);
     }
 
@@ -29,7 +30,7 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return value.isEmpty();
     }
 
-    public @NotNull MojangsonValueType<?> getTypeAt(int index) {
+    public MojangsonValueType<?> getTypeAt(int index) {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
         }
@@ -38,7 +39,7 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         else return MojangsonValueType.get(value.get(value.size() + index));
     }
 
-    public <T extends MojangsonValue<?>> T get(int index, @NotNull MojangsonValueType<T> type) {
+    public <T extends MojangsonValue<?>> T get(int index, MojangsonValueType<T> type) {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
         }
@@ -97,7 +98,7 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
     }
 
     @Override
-    public @NotNull Iterator<MojangsonValue<?>> iterator() {
+    public Iterator<MojangsonValue<?>> iterator() {
         final List<MojangsonValue<?>> list = new ArrayList<>();
 
         for (int i = 0; i < this.value.size(); i++) {
@@ -107,7 +108,7 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return list.iterator();
     }
 
-    public @NotNull List<Object> toList() {
+    public List<Object> toList() {
         final List<Object> arrayList = new ArrayList<>();
 
         for (int i = 0; i < length(); i++) {
@@ -136,11 +137,11 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
     }
 
     @Override
-    public @NotNull MojangsonList copy() {
+    public MojangsonList copy() {
         return MojangsonValueTypes.LIST.toMojangson(toList());
     }
 
-    public boolean isSuperOf(@NotNull MojangsonList other) {
+    public boolean isSuperOf(MojangsonList other) {
         if (other.length() == 0) return true;
 
         for (final MojangsonValue<?> conditionValue : other) {
@@ -162,7 +163,7 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return false;
     }
 
-    public boolean isListOf(@NotNull MojangsonValueType<?> type) {
+    public boolean isListOf(MojangsonValueType<?> type) {
         for (int i = 0; i < length(); i++) {
             if (!getTypeAt(i).equals(type)) {
                 return false;
@@ -172,7 +173,7 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return true;
     }
 
-    public <T extends MojangsonValue<?>> TypedMojangsonList<T> typed(@NotNull  MojangsonValueType<T> type) {
+    public <T extends MojangsonValue<?>> TypedMojangsonList<T> typed(MojangsonValueType<T> type) {
         final TypedMojangsonList<T> array = new TypedMojangsonList<>(type);
 
         for (int i = 0; i < length(); i++) {

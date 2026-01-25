@@ -1,8 +1,9 @@
 package com.gmail.takenokoii78.mojangson.values;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 
+@NullMarked
 public final class MojangsonByte extends MojangsonNumber<Byte> {
     private MojangsonByte(byte value) {
         super(value);
@@ -22,7 +23,7 @@ public final class MojangsonByte extends MojangsonNumber<Byte> {
         else return null;
     }
 
-    public static @NotNull MojangsonByte valueOf(byte value) {
+    public static MojangsonByte valueOf(byte value) {
         return new MojangsonByte(value);
     }
 

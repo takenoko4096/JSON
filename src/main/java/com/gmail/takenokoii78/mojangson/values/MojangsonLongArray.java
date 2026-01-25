@@ -1,20 +1,21 @@
 package com.gmail.takenokoii78.mojangson.values;
 
 import com.gmail.takenokoii78.mojangson.MojangsonValueTypes;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+@NullMarked
 public class MojangsonLongArray extends MojangsonArray<long[], MojangsonLong> {
     public MojangsonLongArray(long[] value) {
         super(value);
     }
 
     @Override
-    public @NotNull MojangsonLongArray copy() {
+    public MojangsonLongArray copy() {
         return from(listView());
     }
 
@@ -41,7 +42,7 @@ public class MojangsonLongArray extends MojangsonArray<long[], MojangsonLong> {
     }
 
     @Override
-    public @NotNull Iterator<MojangsonLong> iterator() {
+    public Iterator<MojangsonLong> iterator() {
         final List<MojangsonLong> longs = new ArrayList<>();
         for (final long longValue : value) {
             longs.add(MojangsonLong.valueOf(longValue));
@@ -50,23 +51,21 @@ public class MojangsonLongArray extends MojangsonArray<long[], MojangsonLong> {
     }
 
     @Override
-    public @NotNull String toString() {
+    public String toString() {
         return "long" + Arrays.toString(value);
     }
 
     @Override
-    public @NotNull long[] toArray() {
+    public long[] toArray() {
         return Arrays.copyOf(value, value.length);
     }
 
     @Override
-    public @NotNull MojangsonList listView() {
-        return getView((arr, ind, val) -> {
-            arr[ind] = (long) val;
-        });
+    public MojangsonList listView() {
+        return getView((arr, ind, val) -> arr[ind] = (long) val);
     }
 
-    public static @NotNull MojangsonLongArray from(@NotNull MojangsonList list) {
+    public static MojangsonLongArray from(MojangsonList list) {
         final long[] longs = new long[list.length()];
 
         for (int i = 0; i < list.length(); i++) {

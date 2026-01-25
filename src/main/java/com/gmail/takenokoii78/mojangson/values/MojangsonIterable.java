@@ -1,8 +1,9 @@
 package com.gmail.takenokoii78.mojangson.values;
 
 import com.gmail.takenokoii78.mojangson.MojangsonValue;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
+@NullMarked
 public interface MojangsonIterable<T extends MojangsonValue<?>> extends MojangsonStructure, Iterable<T> {
     boolean isEmpty();
 
@@ -12,5 +13,5 @@ public interface MojangsonIterable<T extends MojangsonValue<?>> extends Mojangso
 
     boolean clear();
 
-    @NotNull MojangsonIterable<T> copy();
+    MojangsonIterable<T> copy();
 }

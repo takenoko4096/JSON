@@ -4,14 +4,15 @@ import com.gmail.takenokoii78.mojangson.MojangsonPath;
 import com.gmail.takenokoii78.mojangson.MojangsonValue;
 import com.gmail.takenokoii78.mojangson.MojangsonValueType;
 import com.gmail.takenokoii78.mojangson.MojangsonValueTypes;
-import org.jetbrains.annotations.NotNull;
+import org.jspecify.annotations.NullMarked;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@NullMarked
 public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue<?>>> implements MojangsonStructure {
-    public MojangsonCompound(@NotNull Map<String, MojangsonValue<?>> value) {
+    public MojangsonCompound(Map<String, MojangsonValue<?>> value) {
         super(value);
     }
 
@@ -19,7 +20,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         this(new HashMap<>());
     }
 
-    public boolean has(@NotNull String key) {
+    public boolean has(String key) {
         return value.containsKey(key);
     }
 
@@ -27,7 +28,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         return value.isEmpty();
     }
 
-    public @NotNull MojangsonValueType<?> getTypeOf(@NotNull String key) {
+    public MojangsonValueType<?> getTypeOf(String key) {
         if (!has(key)) {
             throw new IllegalArgumentException("キー '" + key + "' は存在しません");
         }
@@ -35,7 +36,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         return MojangsonValueType.get(value.get(key));
     }
 
-    public @NotNull <T extends MojangsonValue<?>> T get(@NotNull String key, MojangsonValueType<T> type) {
+    public <T extends MojangsonValue<?>> T get(String key, MojangsonValueType<T> type) {
         if (!has(key)) {
             throw new IllegalArgumentException("キー '" + key + "' は存在しません");
         }
@@ -47,11 +48,11 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         return type.toMojangson(value.get(key));
     }
 
-    public void set(@NotNull String key, Object value) {
+    public void set(String key, Object value) {
         this.value.put(key, MojangsonValueType.get(value).toMojangson(value));
     }
 
-    public boolean delete(@NotNull String key) {
+    public boolean delete(String key) {
         if (has(key)) {
             value.remove(key);
             return true;
@@ -69,11 +70,11 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         }
     }
 
-    public @NotNull Set<String> keys() {
+    public Set<String> keys() {
         return Set.copyOf(value.keySet());
     }
 
-    public @NotNull Map<String, Object> toMap() {
+    public Map<String, Object> toMap() {
         final Map<String, Object> map = new HashMap<>();
 
         for (final String key : keys()) {
@@ -102,11 +103,11 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
     }
 
     @Override
-    public @NotNull MojangsonStructure copy() {
+    public MojangsonStructure copy() {
         return MojangsonValueTypes.COMPOUND.toMojangson(toMap());
     }
 
-    public boolean isSuperOf(@NotNull MojangsonCompound other) {
+    public boolean isSuperOf(MojangsonCompound other) {
         for (final String key : other.keys()) {
             if (has(key)) {
                 final MojangsonValue<?> conditionValue = other.get(key, other.getTypeOf(key));
@@ -135,43 +136,55 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         return true;
     }
 
-    public boolean has(@NotNull MojangsonPath path) {
+    public boolean has(MojangsonPath path) {
         try {
-            return path.access(this, MojangsonPath.MojangsonPathReference::has, false);
+            return Boolean.TRUE.equals(path.access(this, MojangsonPath.MojangsonPathReference::has, false));
         }
         catch (MojangsonPath.MojangsonInaccessiblePathException e) {
             return false;
         }
     }
 
-    public @NotNull MojangsonValueType<?> getTypeOf(@NotNull MojangsonPath path) {
+    public MojangsonValueType<?> getTypeOf(MojangsonPath path) {
         try {
-            return path.access(this, MojangsonPath.MojangsonPathReference::getType, false);
+            final MojangsonValueType<?> type = path.access(this, MojangsonPath.MojangsonPathReference::getType, false);
+
+            if (type == null) {
+                throw new IllegalStateException("型の取得に失敗しました: アクセスの戻り値が null です");
+            }
+
+            return type;
         }
         catch (MojangsonPath.MojangsonInaccessiblePathException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    public <T extends MojangsonValue<?>> @NotNull T get(@NotNull MojangsonPath path, @NotNull MojangsonValueType<T> type) {
+    public <T extends MojangsonValue<?>> T get(MojangsonPath path, MojangsonValueType<T> type) {
         try {
-            return path.access(this, reference -> reference.get(type), false);
+            final T value = path.access(this, reference -> reference.get(type), false);
+
+            if (value == null) {
+                throw new IllegalStateException("値の取得に失敗しました: アクセスの戻り値が null です");
+            }
+
+            return value;
         }
         catch (MojangsonPath.MojangsonInaccessiblePathException e) {
             throw new IllegalStateException(e);
         }
     }
 
-    public boolean delete(@NotNull MojangsonPath path) {
+    public boolean delete(MojangsonPath path) {
         try {
-            return path.access(this, MojangsonPath.MojangsonPathReference::delete, false);
+            return Boolean.TRUE.equals(path.access(this, MojangsonPath.MojangsonPathReference::delete, false));
         }
         catch (MojangsonPath.MojangsonInaccessiblePathException e) {
             return false;
         }
     }
 
-    public void set(@NotNull MojangsonPath path, Object value) {
+    public void set(MojangsonPath path, Object value) {
         try {
             path.access(this, reference -> {
                 reference.set(value);
