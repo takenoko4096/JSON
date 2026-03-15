@@ -287,7 +287,7 @@ public final class MojangsonPath {
     }
 
     public static final class MojangsonInaccessiblePathException extends Exception {
-        public MojangsonInaccessiblePathException(Object nodeParameter) {
+        private MojangsonInaccessiblePathException(Object nodeParameter) {
             super("パスに対応する値へのアクセスに失敗しました: 条件 " + nodeParameter + " を満たすキーは存在しません");
         }
     }

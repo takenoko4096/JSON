@@ -281,7 +281,7 @@ public final class JSONPath {
     }
 
     public static final class JSONInaccessiblePathException extends Exception {
-        public JSONInaccessiblePathException(Object nodeParameter) {
+        private JSONInaccessiblePathException(Object nodeParameter) {
             super("パスに対応する値へのアクセスに失敗しました: 条件 " + nodeParameter + " を満たすキーは存在しません");
         }
     }
