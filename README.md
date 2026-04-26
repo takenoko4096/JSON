@@ -12,6 +12,6 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.takenoko4096:mojangson-bridge:1.0-SNAPSHOT")
+    implementation("io.github.takenoko4096:mojangson-bridge:0.1.0")
 }
 ```
