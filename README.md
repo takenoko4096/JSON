@@ -2,13 +2,21 @@
 
 json <-> mojangson <-> nbt の相互変換
 
-## use
+## `pom.xml`
 
+```xml
+<dependency>
+    <groupId>io.github.takenoko4096</groupId>
+    <artifactId>mojangson-bridge</artifactId>
+    <version>0.1.0</version>
+</dependency>
+```
 
+## `build.gradle.kts`
 
 ```kotlin
 repositories {
-    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
