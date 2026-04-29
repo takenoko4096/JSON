@@ -305,6 +305,7 @@ public class JSONParser {
     }
 
     private void finish() {
+        whitespace();
         if (!isOver()) throw exception("解析終了後、末尾に無効な文字列(" + text.substring(location) + ")を検出しました");
         location = 0;
     }

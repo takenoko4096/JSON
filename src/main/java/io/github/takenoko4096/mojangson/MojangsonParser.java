@@ -494,6 +494,10 @@ public class MojangsonParser {
 
         final List<MojangsonValue<?>> arguments = new ArrayList<>();
 
+        if (next(FUNCTION_BRACES[1])) {
+            return function.apply(arguments);
+        }
+
         do {
             arguments.add(value());
         }
@@ -543,11 +547,12 @@ public class MojangsonParser {
     }
 
     private void finish() {
+        whitespace();
         if (!isOver()) throw exception("解析終了後、末尾に無効な文字列(" + text.substring(location) + ")を検出しました");
         location = 0;
     }
 
-    public MojangsonValue<?> parse() {
+    private MojangsonValue<?> parse() {
         final MojangsonValue<?> value = value();
         finish();
         return value;
