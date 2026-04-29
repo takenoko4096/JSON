@@ -12,6 +12,9 @@ import java.util.Objects;
  */
 @NullMarked
 public abstract class JSONValueType<T extends JSONValue<?>> {
+    /**
+     * クラスオブジェクト。
+     */
     protected final Class<T> clazz;
 
     protected JSONValueType(Class<T> clazz) {

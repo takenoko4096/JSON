@@ -32,7 +32,7 @@ public final class JSONValueTypes {
     };
 
     /**
-     * `java.lang.Number` に対応。
+     * java.lang.Numberに対応。
      * @see JSONNumber
      */
     public static final JSONValueType<JSONNumber> NUMBER = new JSONValueType<>(JSONNumber.class) {
@@ -45,7 +45,7 @@ public final class JSONValueTypes {
     };
 
     /**
-     * `java.lang.String` に対応。
+     * java.lang.Stringに対応。
      * @see JSONString
      */
     public static final JSONValueType<JSONString> STRING = new JSONValueType<>(JSONString.class) {
@@ -61,7 +61,7 @@ public final class JSONValueTypes {
     };
 
     /**
-     * `java.util.Map` に対応。
+     * java.util.Mapに対応。
      * @see JSONObject
      */
     public static final JSONValueType<JSONObject> OBJECT = new JSONValueType<>(JSONObject.class) {
@@ -89,7 +89,7 @@ public final class JSONValueTypes {
     };
 
     /**
-     * `java.util.List` に対応。
+     * java.util.Listに対応。
      * @see JSONArray
      */
     public static final JSONValueType<JSONArray> ARRAY = new JSONValueType<>(JSONArray.class) {
@@ -199,7 +199,7 @@ public final class JSONValueTypes {
     };
 
     /**
-     * `null` に対応。
+     * nullに対応。
      * @see JSONNull
      */
     public static final JSONValueType<JSONNull> NULL = new JSONValueType<>(JSONNull.class) {
