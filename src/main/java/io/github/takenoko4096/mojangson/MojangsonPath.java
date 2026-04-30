@@ -200,7 +200,7 @@ public final class MojangsonPath {
     }
 
     public static MojangsonPath of(String path) throws MojangsonParseException {
-        return MojangsonPathParser.parse(path);
+        return new MojangsonPathParser().parse(path);
     }
 
     public static abstract class MojangsonPathReference<S extends MojangsonStructure, T> {

@@ -22,12 +22,12 @@ public class MojangsonPathParser {
 
     private static final String EMPTY_STRING = "";
 
-    private final String text;
+    private String text;
 
     private int location = -1;
 
-    private MojangsonPathParser(String path) {
-        this.text = path;
+    public MojangsonPathParser() {
+        this.text = "";
     }
 
     private MojangsonParseException exception(String message) {
@@ -302,18 +302,20 @@ public class MojangsonPathParser {
         return node;
     }
 
-    private void extraChars() {
+    private void finish() {
+        whitespace();
         if (!isOver()) throw exception("解析終了後、末尾に無効な文字列(" + text.substring(location) + ")を検出しました");
+        location = 0;
     }
 
     private MojangsonPath parse() {
         final MojangsonPathNode<?, ?> rootNode = root();
-        extraChars();
+        finish();
         return new MojangsonPath(rootNode);
     }
 
-    protected static MojangsonPath parse(String path) throws MojangsonParseException {
-        final MojangsonPathParser parser = new MojangsonPathParser(path);
-        return parser.parse();
+    public MojangsonPath parse(String path) throws MojangsonParseException {
+        this.text = path;
+        return parse();
     }
 }

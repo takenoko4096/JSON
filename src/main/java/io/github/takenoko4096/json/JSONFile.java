@@ -14,6 +14,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.function.Function;
 
+/**
+ * json形式のファイルを表現します。
+ */
 @NullMarked
 public class JSONFile {
     private final File file;
@@ -63,10 +66,18 @@ public class JSONFile {
         else throw new IllegalStateException("ファイル '" + file + "' が存在しません");
     }
 
+    /**
+     * ファイルが存在するかどうかを返します。
+     * @return 存在する場合に真。
+     */
     public boolean exists() {
         return file.exists();
     }
 
+    /**
+     * 空のファイルを作成します。
+     * @throws IllegalStateException 既に存在する、またはI/O例外の場合。
+     */
     public void create() throws IllegalStateException {
         if (exists()) throw new IllegalStateException("既にファイル '" + file + "' は存在します");
         else try {
@@ -77,6 +88,10 @@ public class JSONFile {
         }
     }
 
+    /**
+     * ファイルを削除します。
+     * @throws IllegalStateException ファイルが存在しない、またはI/O例外の場合。
+     */
     public void delete() throws IllegalStateException {
         if (exists()) try {
             Files.delete(file.toPath());
@@ -87,6 +102,11 @@ public class JSONFile {
         else throw new IllegalStateException("ファイル '" + file + "' が存在しません");
     }
 
+    /**
+     * ファイルサイズを取得します。
+     * @return ファイルサイズ (bytes)
+     * @throws IllegalStateException ファイルが存在しない、またはI/O例外の場合。
+     */
     public long getSize() throws IllegalStateException {
         if (exists()) try {
             return Files.size(file.toPath());
@@ -97,10 +117,22 @@ public class JSONFile {
         else throw new IllegalStateException("ファイル '" + file + "' が存在しません");
     }
 
+    /**
+     * json構造としてファイルの記述を読み取ります。
+     * @return パース結果
+     * @throws JSONParseException パースに失敗した場合
+     * @throws IllegalStateException ファイルの読み取りに失敗した場合
+     */
     public JSONStructure read() throws JSONParseException, IllegalStateException {
         return JSONParser.structure(readAsString());
     }
 
+    /**
+     * json構造をシリアライズして書き込みます。
+     * @param structure json構造
+     * @throws JSONSerializationException シリアライズに失敗した場合
+     * @throws IllegalStateException ファイルの書き込みに失敗した場合
+     */
     public void write(JSONStructure structure) throws JSONSerializationException, IllegalStateException {
         writeAsString(JSONSerializer.serialize(structure));
     }

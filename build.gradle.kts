@@ -1,16 +1,11 @@
 plugins {
-    java
+    `java-library`
     id("com.vanniktech.maven.publish") version "0.36.0"
     signing
 }
 
 group = "io.github.takenoko4096"
 version = "0.1.0"
-
-java {
-    withSourcesJar()
-    withJavadocJar()
-}
 
 repositories {
     mavenCentral()
@@ -25,6 +20,12 @@ val signingPassword: String by project
 
 signing {
     useInMemoryPgpKeys(signingKey, signingPassword)
+}
+
+tasks {
+    withType<JavaCompile> {
+        options.encoding = Charsets.UTF_8.name()
+    }
 }
 
 mavenPublishing {
