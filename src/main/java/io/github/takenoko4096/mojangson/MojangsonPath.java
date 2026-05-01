@@ -8,7 +8,6 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 @NullMarked
@@ -19,85 +18,55 @@ public final class MojangsonPath {
         this.root = root;
     }
 
-    private @Nullable MojangsonStructure getStructure(MojangsonPathNode<?, ?> node, @Nullable MojangsonStructure structure) {
+    private <U> @Nullable U checkedAccess(MojangsonPathNode<?, ?> node, @Nullable MojangsonStructure structure, MojangsonPathReferer<MojangsonStructure, Object, @Nullable U> function) throws MojangsonPathUnableToAccessException {
         switch (node) {
             case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(structure instanceof MojangsonCompound object)) {
-                    throw new IllegalArgumentException(String.valueOf(structure));
+                    throw new MojangsonPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " がコンパウンドである必要があります");
                 }
-                final var value = objectKeyNode.get(object);
-                if (!(value instanceof MojangsonStructure s)) {
-                    throw new IllegalArgumentException();
-                }
-                return s;
+                return objectKeyNode.access(object, function::use);
             }
             case MojangsonPathNode.ArrayIndexNode arrayIndexNode -> {
-                if (!(structure instanceof MojangsonList array)) {
-                    throw new IllegalArgumentException(structure.getClass().getName());
-                }
-                final var value = arrayIndexNode.get(array);
-                if (!(value instanceof MojangsonStructure s)) {
-                    throw new IllegalArgumentException();
-                }
-                return s;
-            }
-            case MojangsonPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
-                if (!(structure instanceof MojangsonCompound object)) {
-                    throw new IllegalArgumentException();
-                }
-                return objectKeyCheckerNode.get(object);
-            }
-            case MojangsonPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
-                if (!(structure instanceof MojangsonList array)) {
-                    throw new IllegalArgumentException();
-                }
-                return arrayIndexFinderNode.get(array);
-            }
-            default -> throw new IllegalArgumentException();
-        }
-    }
-
-    private <U> @Nullable U accessStructure(MojangsonPathNode<?, ?> node, @Nullable MojangsonStructure structure, BiFunction<MojangsonStructure, Object, @Nullable U> function) {
-        switch (node) {
-            case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
-                if (!(structure instanceof MojangsonCompound object)) {
-                    throw new IllegalArgumentException(String.valueOf(structure));
-                }
-                return objectKeyNode.access(object, function::apply);
-            }
-            case MojangsonPathNode.ArrayIndexNode arrayIndexNode -> {
-                if (structure == null) {
-                    throw new IllegalArgumentException();
-                }
-
                 return switch (structure) {
-                    case MojangsonList list -> arrayIndexNode.access(list, function::apply);
-                    case MojangsonArray<?, ?> array -> arrayIndexNode.access(array.listView(), function::apply);
-                    default -> throw new IllegalArgumentException();
+                    case MojangsonList list -> arrayIndexNode.access(list, function::use);
+                    case MojangsonArray<?, ?> array -> arrayIndexNode.access(array.listView(), function::use);
+                    case null, default -> throw new MojangsonPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " が配列またはリストである必要があります");
                 };
             }
             case MojangsonPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
                 if (!(structure instanceof MojangsonCompound object)) {
-                    throw new IllegalArgumentException();
+                    throw new MojangsonPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " がコンパウンドである必要があります");
                 }
-                return objectKeyCheckerNode.access(object, function::apply);
+                return objectKeyCheckerNode.access(object, function::use);
             }
             case MojangsonPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
                 if (!(structure instanceof MojangsonList array)) {
-                    throw new IllegalArgumentException();
+                    throw new MojangsonPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " がリストである必要があります");
                 }
-                return arrayIndexFinderNode.access(array, function::apply);
+                return arrayIndexFinderNode.access(array, function::use);
             }
             default -> throw new IllegalArgumentException();
         }
     }
 
-    private <U> @Nullable U onTermination(MojangsonCompound compound, BiFunction<MojangsonStructure, Object, @Nullable U> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
+    private <U> @Nullable U onTermination(MojangsonCompound compound, MojangsonPathReferer<MojangsonStructure, Object, @Nullable U> function, boolean isForcedAccess) throws MojangsonPathUnableToAccessException {
         MojangsonPathNode<?, ?> node = root;
         MojangsonStructure currentStruct = compound;
 
         while (node.child != null) {
-            MojangsonStructure nextStruct = getStructure(node, currentStruct);
+            MojangsonStructure nextStruct = checkedAccess(node, currentStruct, (a, b) -> {
+                final MojangsonValue<?> value = switch (a) {
+                    case MojangsonCompound obj -> obj.get((String) b, obj.getTypeOf((String) b));
+                    case MojangsonList arr -> arr.get((Integer) b, arr.getTypeAt((Integer) b));
+                    default -> throw new IllegalStateException("NEVER HAPPENS");
+                };
+                if (value instanceof MojangsonStructure structure) {
+                    return structure;
+                }
+                else {
+                    throw new MojangsonPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: アクセス過程で取得された値 " + value + " は構造体ではありませんが、パスはこの先にも続いています");
+                }
+            });
 
             if (nextStruct == null) {
                 if (node instanceof MojangsonPathNode.ObjectKeyNode objectKeyNode && isForcedAccess) {
@@ -105,7 +74,7 @@ public final class MojangsonPath {
                     ((MojangsonCompound) currentStruct).set(objectKeyNode.parameter, nextStruct);
                 }
                 else {
-                    throw new MojangsonInaccessiblePathException(node.parameter);
+                    throw new MojangsonPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: 条件 " + node.parameter + " を満たすキーは存在しません");
                 }
             }
 
@@ -113,10 +82,10 @@ public final class MojangsonPath {
             node = node.child;
         }
 
-        return accessStructure(node, currentStruct, function);
+        return checkedAccess(node, currentStruct, function);
     }
 
-    public <T> @Nullable T access(MojangsonCompound MojangsonCompound, Function<MojangsonPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
+    public <T> @Nullable T access(MojangsonCompound MojangsonCompound, Function<MojangsonPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws MojangsonPathUnableToAccessException {
         return onTermination(MojangsonCompound, (lastStructure, nodeParameter) -> {
             final MojangsonPathReference<?, ?> reference = switch (lastStructure) {
                 case MojangsonCompound object -> new MojangsonPathReference.MojangsonCompoundPathReference(object, (String) nodeParameter);
@@ -294,9 +263,4 @@ public final class MojangsonPath {
         }
     }
 
-    public static final class MojangsonInaccessiblePathException extends Exception {
-        private MojangsonInaccessiblePathException(Object nodeParameter) {
-            super("パスに対応する値へのアクセスに失敗しました: 条件 " + nodeParameter + " を満たすキーは存在しません");
-        }
-    }
 }

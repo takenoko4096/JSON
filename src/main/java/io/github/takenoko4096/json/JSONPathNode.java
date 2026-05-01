@@ -6,8 +6,6 @@ import io.github.takenoko4096.json.values.JSONStructure;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-import java.util.function.BiFunction;
-
 /**
  * jsonパスを構成する各ノードを表現します。
  * @param <S> 親となるjson構造
@@ -25,9 +23,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         this.child = child;
     }
 
-    public abstract @Nullable JSONValue<?> get(S structure);
-
-    public abstract <U> @Nullable U access(S structure, BiFunction<S, Object, U> function);
+    public abstract <U> @Nullable U access(S structure, JSONPathReferer<S, Object, U> function) throws JSONPathUnableToAccessException;
 
     public abstract JSONPathNode<S, T> copy();
 
@@ -39,14 +35,8 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public @Nullable JSONValue<?> get(JSONObject structure) {
-            if (!structure.has(parameter)) return null;
-            else return structure.get(parameter, structure.getTypeOf(parameter));
-        }
-
-        @Override
-        public <U> @Nullable U access(JSONObject structure, BiFunction<JSONObject, Object, @Nullable U> function) {
-            return function.apply(structure, parameter);
+        public <U> @Nullable U access(JSONObject structure, JSONPathReferer<JSONObject, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
+            return function.use(structure, parameter);
         }
 
         @Override
@@ -66,14 +56,8 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public @Nullable JSONValue<?> get(JSONArray structure) {
-            if (!structure.has(parameter)) return null;
-            else return structure.get(parameter, structure.getTypeAt(parameter));
-        }
-
-        @Override
-        public <U> @Nullable U access(JSONArray structure, BiFunction<JSONArray, Object, @Nullable U> function) {
-            return function.apply(structure, parameter);
+        public <U> @Nullable U access(JSONArray structure, JSONPathReferer<JSONArray, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
+            return function.use(structure, parameter);
         }
 
         @Override
@@ -93,29 +77,14 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public @Nullable JSONObject get(JSONObject structure) {
+        public <U> @Nullable U access(JSONObject structure, JSONPathReferer<JSONObject, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
             if (!structure.has(parameter.a())) return null;
             else {
                 final JSONObject value = structure.get(parameter.a(), JSONValueTypes.OBJECT);
                 final JSONObject condition = parameter.b();
 
                 if (value.isSuperOf(condition)) {
-                    return value;
-                }
-                else return null;
-            }
-        }
-
-        @Override
-        public <U> @Nullable U access(JSONObject structure, BiFunction<JSONObject, Object, @Nullable U> function) {
-            if (!structure.has(parameter.a())) return null;
-            else {
-                final JSONObject value = structure.get(parameter.a(), JSONValueTypes.OBJECT);
-                final JSONObject condition = parameter.b();
-
-                if (value.isSuperOf(condition)) {
-                    // return value;
-                    return function.apply(structure, parameter.a());
+                    return function.use(structure, parameter.a());
                 }
                 else return null;
             }
@@ -138,7 +107,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public @Nullable JSONObject get(JSONArray structure) {
+        public <U> @Nullable U access(JSONArray structure, JSONPathReferer<JSONArray, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
             for (int i = 0; i < structure.length(); i++) {
                 if (structure.getTypeAt(i) != JSONValueTypes.OBJECT) {
                     continue;
@@ -147,25 +116,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
                 final JSONObject element = structure.get(i, JSONValueTypes.OBJECT);
 
                 if (element.isSuperOf(parameter)) {
-                    return element;
-                }
-                else return null;
-            }
-
-            return null;
-        }
-
-        @Override
-        public <U> @Nullable U access(JSONArray structure, BiFunction<JSONArray, Object, @Nullable U> function) {
-            for (int i = 0; i < structure.length(); i++) {
-                if (structure.getTypeAt(i) != JSONValueTypes.OBJECT) {
-                    continue;
-                }
-
-                final JSONObject element = structure.get(i, JSONValueTypes.OBJECT);
-
-                if (element.isSuperOf(parameter)) {
-                    return function.apply(structure, i);
+                    return function.use(structure, i);
                 }
                 else return null;
             }

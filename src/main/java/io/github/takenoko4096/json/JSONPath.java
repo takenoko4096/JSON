@@ -7,7 +7,6 @@ import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import java.util.Objects;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 /**
@@ -21,80 +20,54 @@ public final class JSONPath {
         this.root = root;
     }
 
-    private @Nullable JSONStructure getStructure(JSONPathNode<?, ?> node, @Nullable JSONStructure structure) {
+    private <U> @Nullable U checkedAccess(JSONPathNode<?, ?> node, @Nullable JSONStructure structure, JSONPathReferer<JSONStructure, Object, U> function) throws JSONPathUnableToAccessException {
         switch (node) {
             case JSONPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(structure instanceof JSONObject object)) {
-                    throw new IllegalArgumentException(String.valueOf(structure));
+                    throw new JSONPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " がオブジェクトである必要があります");
                 }
-                final var value = objectKeyNode.get(object);
-                if (!(value instanceof JSONStructure s)) {
-                    throw new IllegalArgumentException();
-                }
-                return s;
+                return objectKeyNode.access(object, function::use);
             }
             case JSONPathNode.ArrayIndexNode arrayIndexNode -> {
                 if (!(structure instanceof JSONArray array)) {
-                    throw new IllegalArgumentException();
+                    throw new JSONPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " が配列である必要があります");
                 }
-                final var value = arrayIndexNode.get(array);
-                if (!(value instanceof JSONStructure s)) {
-                    throw new IllegalArgumentException();
-                }
-                return s;
+                return arrayIndexNode.access(array, function::use);
             }
             case JSONPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
                 if (!(structure instanceof JSONObject object)) {
-                    throw new IllegalArgumentException();
+                    throw new JSONPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " がオブジェクトである必要があります");
                 }
-                return objectKeyCheckerNode.get(object);
+                return objectKeyCheckerNode.access(object, function::use);
             }
             case JSONPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
                 if (!(structure instanceof JSONArray array)) {
-                    throw new IllegalArgumentException();
+                    throw new JSONPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: ノード " + node + " にアクセスするには " + structure + " が配列である必要があります");
                 }
-                return arrayIndexFinderNode.get(array);
+                return arrayIndexFinderNode.access(array, function::use);
             }
             default -> throw new IllegalArgumentException();
         }
     }
 
-    private <U> @Nullable U accessStructure(JSONPathNode<?, ?> node, @Nullable JSONStructure structure, BiFunction<JSONStructure, Object, U> function) {
-        switch (node) {
-            case JSONPathNode.ObjectKeyNode objectKeyNode -> {
-                if (!(structure instanceof JSONObject object)) {
-                    throw new IllegalArgumentException(String.valueOf(structure));
-                }
-                return objectKeyNode.access(object, function::apply);
-            }
-            case JSONPathNode.ArrayIndexNode arrayIndexNode -> {
-                if (!(structure instanceof JSONArray array)) {
-                    throw new IllegalArgumentException();
-                }
-                return arrayIndexNode.access(array, function::apply);
-            }
-            case JSONPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
-                if (!(structure instanceof JSONObject object)) {
-                    throw new IllegalArgumentException();
-                }
-                return objectKeyCheckerNode.access(object, function::apply);
-            }
-            case JSONPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
-                if (!(structure instanceof JSONArray array)) {
-                    throw new IllegalArgumentException();
-                }
-                return arrayIndexFinderNode.access(array, function::apply);
-            }
-            default -> throw new IllegalArgumentException();
-        }
-    }
-
-    private <U> @Nullable U onTermination(JSONObject jsonObject, BiFunction<JSONStructure, Object, @Nullable U> function, boolean isForcedAccess) throws JSONInaccessiblePathException {
+    private <U> @Nullable U onTermination(JSONObject jsonObject, JSONPathReferer<JSONStructure, Object, @Nullable U> function, boolean isForcedAccess) throws JSONPathUnableToAccessException {
         JSONPathNode<?, ?> node = root;
         JSONStructure currentStruct = jsonObject;
 
         while (node.child != null) {
-            JSONStructure nextStruct = getStructure(node, currentStruct);
+            JSONStructure nextStruct = checkedAccess(node, currentStruct, (a, b) -> {
+                final JSONValue<?> value = switch (a) {
+                    case JSONObject obj -> obj.get((String) b, obj.getTypeOf((String) b));
+                    case JSONArray arr -> arr.get((Integer) b, arr.getTypeAt((Integer) b));
+                    default -> throw new IllegalStateException("NEVER HAPPENS");
+                };
+                if (value instanceof JSONStructure structure) {
+                    return structure;
+                }
+                else {
+                    throw new JSONPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: アクセス過程で取得された値 " + value + " は構造体ではありませんが、パスはこの先にも続いています");
+                }
+            });
 
             if (nextStruct == null) {
                 if (node instanceof JSONPathNode.ObjectKeyNode objectKeyNode && isForcedAccess) {
@@ -102,7 +75,7 @@ public final class JSONPath {
                     ((JSONObject) currentStruct).set(objectKeyNode.parameter, nextStruct);
                 }
                 else {
-                    throw new JSONInaccessiblePathException(node.parameter);
+                    throw new JSONPathUnableToAccessException("パスに対応する値へのアクセスに失敗しました: オブジェクト " + currentStruct + " に条件 " + node.parameter + " を満たすキーは存在しません");
                 }
             }
 
@@ -110,10 +83,10 @@ public final class JSONPath {
             node = node.child;
         }
 
-        return accessStructure(node, currentStruct, function);
+        return checkedAccess(node, currentStruct, function);
     }
 
-    public <T> @Nullable T access(JSONObject jsonObject, Function<JSONPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws JSONInaccessiblePathException {
+    public <T> @Nullable T access(JSONObject jsonObject, Function<JSONPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws JSONPathUnableToAccessException {
         return onTermination(jsonObject, (lastStructure, nodeParameter) -> {
             final JSONPathReference<?, ?> reference = switch (lastStructure) {
                 case JSONObject object -> new JSONPathReference.JSONObjectPathReference(object, (String) nodeParameter);
@@ -343,9 +316,4 @@ public final class JSONPath {
         }
     }
 
-    public static final class JSONInaccessiblePathException extends Exception {
-        private JSONInaccessiblePathException(Object nodeParameter) {
-            super("パスに対応する値へのアクセスに失敗しました: 条件 " + nodeParameter + " を満たすキーは存在しません");
-        }
-    }
 }

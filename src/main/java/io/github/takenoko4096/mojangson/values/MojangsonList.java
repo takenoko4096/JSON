@@ -148,7 +148,6 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
 
     public boolean isSuperOf(MojangsonList other) {
         if (other.length() == 0) return true;
-
         for (final MojangsonValue<?> conditionValue : other) {
             if (value.stream().anyMatch(targetValue -> {
                 if (targetValue instanceof MojangsonCompound superVal && conditionValue instanceof MojangsonCompound subVal) {

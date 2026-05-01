@@ -1,9 +1,6 @@
 package io.github.takenoko4096.mojangson.values;
 
-import io.github.takenoko4096.mojangson.MojangsonPath;
-import io.github.takenoko4096.mojangson.MojangsonValue;
-import io.github.takenoko4096.mojangson.MojangsonValueType;
-import io.github.takenoko4096.mojangson.MojangsonValueTypes;
+import io.github.takenoko4096.mojangson.*;
 import org.jspecify.annotations.NullMarked;
 
 import java.util.HashMap;
@@ -147,7 +144,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         try {
             return Boolean.TRUE.equals(path.access(this, MojangsonPath.MojangsonPathReference::has, false));
         }
-        catch (MojangsonPath.MojangsonInaccessiblePathException e) {
+        catch (MojangsonPathUnableToAccessException e) {
             return false;
         }
     }
@@ -162,7 +159,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
 
             return type;
         }
-        catch (MojangsonPath.MojangsonInaccessiblePathException e) {
+        catch (MojangsonPathUnableToAccessException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -177,7 +174,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
 
             return value;
         }
-        catch (MojangsonPath.MojangsonInaccessiblePathException e) {
+        catch (MojangsonPathUnableToAccessException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -186,7 +183,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
         try {
             return Boolean.TRUE.equals(path.access(this, MojangsonPath.MojangsonPathReference::delete, false));
         }
-        catch (MojangsonPath.MojangsonInaccessiblePathException e) {
+        catch (MojangsonPathUnableToAccessException e) {
             return false;
         }
     }
@@ -198,7 +195,7 @@ public class MojangsonCompound extends MojangsonValue<Map<String, MojangsonValue
                 return null;
             }, true);
         }
-        catch (MojangsonPath.MojangsonInaccessiblePathException e) {
+        catch (MojangsonPathUnableToAccessException e) {
             throw new IllegalStateException(e);
         }
     }

@@ -1,10 +1,6 @@
 package io.github.takenoko4096.json.values;
 
 import io.github.takenoko4096.json.*;
-import io.github.takenoko4096.json.JSONPath;
-import io.github.takenoko4096.json.JSONValue;
-import io.github.takenoko4096.json.JSONValueType;
-import io.github.takenoko4096.json.JSONValueTypes;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
@@ -50,7 +46,7 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
         }
 
         if (!getTypeOf(key).equals(type)) {
-            throw new IllegalArgumentException("キー '" + key + "' は期待される型の値と紐づけられていません: " + getTypeOf(key));
+            throw new IllegalArgumentException("キー '" + key + "' は期待される型(" + getTypeOf(key) + ")の値と紐づけられていません: " + type);
         }
 
         return type.toJSON(value.get(key));
@@ -152,7 +148,7 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
             if (flag == null) throw new IllegalStateException("NEVER HAPPENS");
             return flag;
         }
-        catch (JSONPath.JSONInaccessiblePathException e) {
+        catch (JSONPathUnableToAccessException e) {
             return false;
         }
     }
@@ -163,7 +159,7 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
             if (type == null) throw new IllegalStateException("NEVER HAPPENS");
             return type;
         }
-        catch (JSONPath.JSONInaccessiblePathException e) {
+        catch (JSONPathUnableToAccessException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -174,7 +170,7 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
             if (value == null) throw new IllegalStateException("NEVER HAPPENS");
             return value;
         }
-        catch (JSONPath.JSONInaccessiblePathException e) {
+        catch (JSONPathUnableToAccessException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -185,7 +181,7 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
             if (flag == null) throw new IllegalStateException("NEVER HAPPENS");
             return flag;
         }
-        catch (JSONPath.JSONInaccessiblePathException e) {
+        catch (JSONPathUnableToAccessException e) {
             throw new IllegalStateException(e);
         }
     }
@@ -197,7 +193,7 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
                 return null;
             }, true);
         }
-        catch (JSONPath.JSONInaccessiblePathException e) {
+        catch (JSONPathUnableToAccessException e) {
             throw new IllegalStateException(e);
         }
     }

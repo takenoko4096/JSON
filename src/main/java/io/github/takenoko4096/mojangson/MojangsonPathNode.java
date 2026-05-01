@@ -6,8 +6,6 @@ import io.github.takenoko4096.mojangson.values.MojangsonStructure;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
-import java.util.function.BiFunction;
-
 @NullMarked
 public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
     protected final T parameter;
@@ -20,9 +18,7 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
         this.child = child;
     }
 
-    public abstract @Nullable MojangsonValue<?> get(S structure);
-
-    public abstract <U> @Nullable U access(S structure, BiFunction<S, Object, U> function);
+    public abstract <U> @Nullable U access(S structure, MojangsonPathReferer<S, Object, U> function) throws MojangsonPathUnableToAccessException;
 
     public abstract MojangsonPathNode<S, T> copy();
 
@@ -34,14 +30,8 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
         }
 
         @Override
-        public @Nullable MojangsonValue<?> get(MojangsonCompound structure) {
-            if (!structure.has(parameter)) return null;
-            else return structure.get(parameter, structure.getTypeOf(parameter));
-        }
-
-        @Override
-        public <U> @Nullable U access(MojangsonCompound structure, BiFunction<MojangsonCompound, Object, @Nullable U> function) {
-            return function.apply(structure, parameter);
+        public <U> @Nullable U access(MojangsonCompound structure, MojangsonPathReferer<MojangsonCompound, Object, @Nullable U> function) throws MojangsonPathUnableToAccessException {
+            return function.use(structure, parameter);
         }
 
         @Override
@@ -61,14 +51,8 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
         }
 
         @Override
-        public @Nullable MojangsonValue<?> get(MojangsonList structure) {
-            if (!structure.has(parameter)) return null;
-            else return structure.get(parameter, structure.getTypeAt(parameter));
-        }
-
-        @Override
-        public <U> @Nullable U access(MojangsonList structure, BiFunction<MojangsonList, Object, @Nullable U> function) {
-            return function.apply(structure, parameter);
+        public <U> @Nullable U access(MojangsonList structure, MojangsonPathReferer<MojangsonList, Object, @Nullable U> function) throws MojangsonPathUnableToAccessException {
+            return function.use(structure, parameter);
         }
 
         @Override
@@ -88,29 +72,14 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
         }
 
         @Override
-        public @Nullable MojangsonCompound get(MojangsonCompound structure) {
+        public <U> @Nullable U access(MojangsonCompound structure, MojangsonPathReferer<MojangsonCompound, Object, @Nullable U> function) throws MojangsonPathUnableToAccessException {
             if (!structure.has(parameter.a())) return null;
             else {
                 final MojangsonCompound value = structure.get(parameter.a(), MojangsonValueTypes.COMPOUND);
-
                 final MojangsonCompound condition = parameter.b();
-                if (value.isSuperOf(condition)) {
-                    return value;
-                }
-                else return null;
-            }
-        }
 
-        @Override
-        public <U> @Nullable U access(MojangsonCompound structure, BiFunction<MojangsonCompound, Object, @Nullable U> function) {
-            if (!structure.has(parameter.a())) return null;
-            else {
-                final MojangsonCompound value = structure.get(parameter.a(), MojangsonValueTypes.COMPOUND);
-
-                final MojangsonCompound condition = parameter.b();
                 if (value.isSuperOf(condition)) {
-                    // return value;
-                    return function.apply(structure, parameter.a());
+                    return function.use(structure, parameter.a());
                 }
                 else return null;
             }
@@ -133,7 +102,7 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
         }
 
         @Override
-        public @Nullable MojangsonCompound get(MojangsonList structure) {
+        public <U> @Nullable U access(MojangsonList structure, MojangsonPathReferer<MojangsonList, Object, @Nullable U> function) throws MojangsonPathUnableToAccessException {
             for (int i = 0; i < structure.length(); i++) {
                 if (structure.getTypeAt(i) != MojangsonValueTypes.COMPOUND) {
                     continue;
@@ -142,25 +111,7 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
                 final MojangsonCompound element = structure.get(i, MojangsonValueTypes.COMPOUND);
 
                 if (element.isSuperOf(parameter)) {
-                    return element;
-                }
-                else return null;
-            }
-
-            return null;
-        }
-
-        @Override
-        public <U> @Nullable U access(MojangsonList structure, BiFunction<MojangsonList, Object, @Nullable U> function) {
-            for (int i = 0; i < structure.length(); i++) {
-                if (structure.getTypeAt(i) != MojangsonValueTypes.LIST) {
-                    continue;
-                }
-
-                final MojangsonCompound element = structure.get(i, MojangsonValueTypes.COMPOUND);
-
-                if (element.isSuperOf(parameter)) {
-                    return function.apply(structure, i);
+                    return function.use(structure, i);
                 }
                 else return null;
             }
