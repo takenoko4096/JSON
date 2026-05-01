@@ -27,6 +27,11 @@ tasks {
     withType<JavaCompile> {
         options.encoding = Charsets.UTF_8.name()
     }
+
+    javadoc {
+        title = "${project.name} ${project.version}"
+        destinationDir = file("$projectDir/docs/${project.version}")
+    }
 }
 
 val gitHubUserName = "takenoko4096"
