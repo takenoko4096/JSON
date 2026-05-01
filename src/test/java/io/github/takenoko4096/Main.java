@@ -19,5 +19,16 @@ void main() {
         """
     );
 
+    abstract class A<S extends Number> {
+        abstract void f(S o);
+    }
+
+    class B extends A<Integer> {
+        @Override
+        void f(Integer o) {
+
+        }
+    }
+
     System.out.println(s.get(JSONPath.of("key.array[{\"foo\":[\"baz\"]}].foo[0]"), JSONValueTypes.STRING));
 }

@@ -21,28 +21,36 @@ public final class JSONPath {
         this.root = root;
     }
 
-    private @Nullable JSONValue<?> wrappedGet(JSONPathNode<?, ?> node, @Nullable JSONValue<?> p) {
+    private @Nullable JSONStructure getStructure(JSONPathNode<?, ?> node, @Nullable JSONStructure structure) {
         switch (node) {
             case JSONPathNode.ObjectKeyNode objectKeyNode -> {
-                if (!(p instanceof JSONObject object)) {
-                    throw new IllegalArgumentException(String.valueOf(p));
+                if (!(structure instanceof JSONObject object)) {
+                    throw new IllegalArgumentException(String.valueOf(structure));
                 }
-                return objectKeyNode.get(object);
-            }
-            case JSONPathNode.ArrayIndexNode arrayIndexNode -> {
-                if (!(p instanceof JSONArray array)) {
+                final var value = objectKeyNode.get(object);
+                if (!(value instanceof JSONStructure s)) {
                     throw new IllegalArgumentException();
                 }
-                return arrayIndexNode.get(array);
+                return s;
+            }
+            case JSONPathNode.ArrayIndexNode arrayIndexNode -> {
+                if (!(structure instanceof JSONArray array)) {
+                    throw new IllegalArgumentException();
+                }
+                final var value = arrayIndexNode.get(array);
+                if (!(value instanceof JSONStructure s)) {
+                    throw new IllegalArgumentException();
+                }
+                return s;
             }
             case JSONPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
-                if (!(p instanceof JSONObject object)) {
+                if (!(structure instanceof JSONObject object)) {
                     throw new IllegalArgumentException();
                 }
                 return objectKeyCheckerNode.get(object);
             }
             case JSONPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
-                if (!(p instanceof JSONArray array)) {
+                if (!(structure instanceof JSONArray array)) {
                     throw new IllegalArgumentException();
                 }
                 return arrayIndexFinderNode.get(array);
@@ -51,28 +59,28 @@ public final class JSONPath {
         }
     }
 
-    private <U> @Nullable U wrappedAccess(JSONPathNode<?, ?> node, @Nullable JSONValue<?> p, BiFunction<JSONStructure, Object, U> function) {
+    private <U> @Nullable U accessStructure(JSONPathNode<?, ?> node, @Nullable JSONStructure structure, BiFunction<JSONStructure, Object, U> function) {
         switch (node) {
             case JSONPathNode.ObjectKeyNode objectKeyNode -> {
-                if (!(p instanceof JSONObject object)) {
-                    throw new IllegalArgumentException(String.valueOf(p));
+                if (!(structure instanceof JSONObject object)) {
+                    throw new IllegalArgumentException(String.valueOf(structure));
                 }
                 return objectKeyNode.access(object, function::apply);
             }
             case JSONPathNode.ArrayIndexNode arrayIndexNode -> {
-                if (!(p instanceof JSONArray array)) {
+                if (!(structure instanceof JSONArray array)) {
                     throw new IllegalArgumentException();
                 }
                 return arrayIndexNode.access(array, function::apply);
             }
             case JSONPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
-                if (!(p instanceof JSONObject object)) {
+                if (!(structure instanceof JSONObject object)) {
                     throw new IllegalArgumentException();
                 }
                 return objectKeyCheckerNode.access(object, function::apply);
             }
             case JSONPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
-                if (!(p instanceof JSONArray array)) {
+                if (!(structure instanceof JSONArray array)) {
                     throw new IllegalArgumentException();
                 }
                 return arrayIndexFinderNode.access(array, function::apply);
@@ -83,26 +91,26 @@ public final class JSONPath {
 
     private <U> @Nullable U onTermination(JSONObject jsonObject, BiFunction<JSONStructure, Object, @Nullable U> function, boolean isForcedAccess) throws JSONInaccessiblePathException {
         JSONPathNode<?, ?> node = root;
-        JSONValue<?> p = jsonObject;
+        JSONStructure currentStruct = jsonObject;
 
         while (node.child != null) {
-            var q = wrappedGet(node, p);
+            JSONStructure nextStruct = getStructure(node, currentStruct);
 
-            if (q == null) {
-                if (node instanceof JSONPathNode.ObjectKeyNode n && isForcedAccess) {
-                    q = new JSONObject();
-                    ((JSONObject) p).set(n.parameter, q);
+            if (nextStruct == null) {
+                if (node instanceof JSONPathNode.ObjectKeyNode objectKeyNode && isForcedAccess) {
+                    nextStruct = new JSONObject();
+                    ((JSONObject) currentStruct).set(objectKeyNode.parameter, nextStruct);
                 }
                 else {
                     throw new JSONInaccessiblePathException(node.parameter);
                 }
             }
 
-            p = q;
+            currentStruct = nextStruct;
             node = node.child;
         }
 
-        return wrappedAccess(node, p, function);
+        return accessStructure(node, currentStruct, function);
     }
 
     public <T> @Nullable T access(JSONObject jsonObject, Function<JSONPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws JSONInaccessiblePathException {

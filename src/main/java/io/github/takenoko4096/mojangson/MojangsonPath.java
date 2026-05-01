@@ -19,28 +19,36 @@ public final class MojangsonPath {
         this.root = root;
     }
 
-    private @Nullable MojangsonValue<?> wrappedGet(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p) {
+    private @Nullable MojangsonStructure getStructure(MojangsonPathNode<?, ?> node, @Nullable MojangsonStructure structure) {
         switch (node) {
             case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
-                if (!(p instanceof MojangsonCompound object)) {
-                    throw new IllegalArgumentException(String.valueOf(p));
+                if (!(structure instanceof MojangsonCompound object)) {
+                    throw new IllegalArgumentException(String.valueOf(structure));
                 }
-                return objectKeyNode.get(object);
+                final var value = objectKeyNode.get(object);
+                if (!(value instanceof MojangsonStructure s)) {
+                    throw new IllegalArgumentException();
+                }
+                return s;
             }
             case MojangsonPathNode.ArrayIndexNode arrayIndexNode -> {
-                if (!(p instanceof MojangsonList array)) {
-                    throw new IllegalArgumentException(p.getClass().getName());
+                if (!(structure instanceof MojangsonList array)) {
+                    throw new IllegalArgumentException(structure.getClass().getName());
                 }
-                return arrayIndexNode.get(array);
+                final var value = arrayIndexNode.get(array);
+                if (!(value instanceof MojangsonStructure s)) {
+                    throw new IllegalArgumentException();
+                }
+                return s;
             }
             case MojangsonPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
-                if (!(p instanceof MojangsonCompound object)) {
+                if (!(structure instanceof MojangsonCompound object)) {
                     throw new IllegalArgumentException();
                 }
                 return objectKeyCheckerNode.get(object);
             }
             case MojangsonPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
-                if (!(p instanceof MojangsonList array)) {
+                if (!(structure instanceof MojangsonList array)) {
                     throw new IllegalArgumentException();
                 }
                 return arrayIndexFinderNode.get(array);
@@ -49,33 +57,33 @@ public final class MojangsonPath {
         }
     }
 
-    private <U> @Nullable U wrappedAccess(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p, BiFunction<MojangsonStructure, Object, @Nullable U> function) {
+    private <U> @Nullable U accessStructure(MojangsonPathNode<?, ?> node, @Nullable MojangsonStructure structure, BiFunction<MojangsonStructure, Object, @Nullable U> function) {
         switch (node) {
             case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
-                if (!(p instanceof MojangsonCompound object)) {
-                    throw new IllegalArgumentException(String.valueOf(p));
+                if (!(structure instanceof MojangsonCompound object)) {
+                    throw new IllegalArgumentException(String.valueOf(structure));
                 }
                 return objectKeyNode.access(object, function::apply);
             }
             case MojangsonPathNode.ArrayIndexNode arrayIndexNode -> {
-                if (p == null) {
+                if (structure == null) {
                     throw new IllegalArgumentException();
                 }
 
-                return switch (p) {
+                return switch (structure) {
                     case MojangsonList list -> arrayIndexNode.access(list, function::apply);
                     case MojangsonArray<?, ?> array -> arrayIndexNode.access(array.listView(), function::apply);
                     default -> throw new IllegalArgumentException();
                 };
             }
             case MojangsonPathNode.ObjectKeyCheckerNode objectKeyCheckerNode -> {
-                if (!(p instanceof MojangsonCompound object)) {
+                if (!(structure instanceof MojangsonCompound object)) {
                     throw new IllegalArgumentException();
                 }
                 return objectKeyCheckerNode.access(object, function::apply);
             }
             case MojangsonPathNode.ArrayIndexFinderNode arrayIndexFinderNode -> {
-                if (!(p instanceof MojangsonList array)) {
+                if (!(structure instanceof MojangsonList array)) {
                     throw new IllegalArgumentException();
                 }
                 return arrayIndexFinderNode.access(array, function::apply);
@@ -86,26 +94,26 @@ public final class MojangsonPath {
 
     private <U> @Nullable U onTermination(MojangsonCompound compound, BiFunction<MojangsonStructure, Object, @Nullable U> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
         MojangsonPathNode<?, ?> node = root;
-        MojangsonValue<?> p = compound;
+        MojangsonStructure currentStruct = compound;
 
         while (node.child != null) {
-            var q = wrappedGet(node, p);
+            MojangsonStructure nextStruct = getStructure(node, currentStruct);
 
-            if (q == null) {
-                if (node instanceof MojangsonPathNode.ObjectKeyNode n && isForcedAccess) {
-                    q = new MojangsonCompound();
-                    ((MojangsonCompound) p).set(n.parameter, q);
+            if (nextStruct == null) {
+                if (node instanceof MojangsonPathNode.ObjectKeyNode objectKeyNode && isForcedAccess) {
+                    nextStruct = new MojangsonCompound();
+                    ((MojangsonCompound) currentStruct).set(objectKeyNode.parameter, nextStruct);
                 }
                 else {
                     throw new MojangsonInaccessiblePathException(node.parameter);
                 }
             }
 
-            p = q;
+            currentStruct = nextStruct;
             node = node.child;
         }
 
-        return wrappedAccess(node, p, function);
+        return accessStructure(node, currentStruct, function);
     }
 
     public <T> @Nullable T access(MojangsonCompound MojangsonCompound, Function<MojangsonPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {

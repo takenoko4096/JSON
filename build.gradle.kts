@@ -38,6 +38,7 @@ val gitHubUserName = "takenoko4096"
 
 mavenPublishing {
     publishToMavenCentral()
+    signAllPublications()
 
     pom {
         name.set(project.name)
