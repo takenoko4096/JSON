@@ -104,7 +104,7 @@ public class JSONFile {
 
     /**
      * ファイルサイズを取得します。
-     * @return ファイルサイズ (bytes)
+     * @return ファイルサイズ (bytes)。
      * @throws IllegalStateException ファイルが存在しない、またはI/O例外の場合。
      */
     public long getSize() throws IllegalStateException {
@@ -119,9 +119,9 @@ public class JSONFile {
 
     /**
      * json構造としてファイルの記述を読み取ります。
-     * @return パース結果
-     * @throws JSONParseException パースに失敗した場合
-     * @throws IllegalStateException ファイルの読み取りに失敗した場合
+     * @return パース結果。
+     * @throws JSONParseException パースに失敗した場合。
+     * @throws IllegalStateException ファイルの読み取りに失敗した場合。
      */
     public JSONStructure read() throws JSONParseException, IllegalStateException {
         return JSONParser.structure(readAsString());
@@ -129,22 +129,41 @@ public class JSONFile {
 
     /**
      * json構造をシリアライズして書き込みます。
-     * @param structure json構造
-     * @throws JSONSerializationException シリアライズに失敗した場合
-     * @throws IllegalStateException ファイルの書き込みに失敗した場合
+     * @param structure json構造。
+     * @throws JSONSerializationException シリアライズに失敗した場合。
+     * @throws IllegalStateException ファイルの書き込みに失敗した場合。
      */
     public void write(JSONStructure structure) throws JSONSerializationException, IllegalStateException {
         writeAsString(JSONSerializer.serialize(structure));
     }
 
+    /**
+     * ルートがオブジェクトであることを期待してファイルの記述を読み取ります。
+     * @return jsonオブジェクト。
+     * @throws JSONParseException パースに失敗した場合。
+     * @throws IllegalStateException ファイルの読み取りに失敗した場合。
+     */
     public JSONObject readAsObject() throws JSONParseException, IllegalStateException {
         return JSONParser.object(readAsString());
     }
 
+    /**
+     * ルートが配列であることを期待してファイルの記述を読み取ります。
+     * @return json配列。
+     * @throws JSONParseException パースに失敗した場合。
+     * @throws IllegalStateException ファイルの読み取りに失敗した場合。
+     */
     public JSONArray readAsArray() throws JSONParseException, IllegalStateException {
         return JSONParser.array(readAsString());
     }
 
+    /**
+     * jsonファイルの記述を読み取り、任意の関数によって構造を編集して再度書き込みます。
+     * @param function 構造を編集する関数。
+     * @throws JSONParseException パースに失敗した場合。
+     * @throws JSONSerializationException シリアライズに失敗した場合。
+     * @throws IllegalStateException ファイルの読み取りまたは書き込みに失敗した場合。
+     */
     public void edit(Function<JSONStructure, JSONStructure> function) throws JSONParseException, JSONSerializationException, IllegalStateException {
         write(function.apply(read()));
     }

@@ -21,7 +21,7 @@ public final class JSONPath {
         this.root = root;
     }
 
-    private @Nullable JSONValue<?> getNextValue(JSONPathNode<?, ?> node, @Nullable JSONValue<?> p) {
+    private @Nullable JSONValue<?> wrappedGet(JSONPathNode<?, ?> node, @Nullable JSONValue<?> p) {
         switch (node) {
             case JSONPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(p instanceof JSONObject object)) {
@@ -51,7 +51,7 @@ public final class JSONPath {
         }
     }
 
-    private <U> @Nullable U useNextValue(JSONPathNode<?, ?> node, @Nullable JSONValue<?> p, BiFunction<JSONStructure, Object, U> function) {
+    private <U> @Nullable U wrappedAccess(JSONPathNode<?, ?> node, @Nullable JSONValue<?> p, BiFunction<JSONStructure, Object, U> function) {
         switch (node) {
             case JSONPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(p instanceof JSONObject object)) {
@@ -81,12 +81,12 @@ public final class JSONPath {
         }
     }
 
-    private <U> @Nullable U onLastNode(JSONObject jsonObject, BiFunction<JSONStructure, Object, U> function, boolean isForcedAccess) throws JSONInaccessiblePathException {
+    private <U> @Nullable U onTermination(JSONObject jsonObject, BiFunction<JSONStructure, Object, @Nullable U> function, boolean isForcedAccess) throws JSONInaccessiblePathException {
         JSONPathNode<?, ?> node = root;
         JSONValue<?> p = jsonObject;
 
         while (node.child != null) {
-            var q = getNextValue(node, p);
+            var q = wrappedGet(node, p);
 
             if (q == null) {
                 if (node instanceof JSONPathNode.ObjectKeyNode n && isForcedAccess) {
@@ -102,11 +102,11 @@ public final class JSONPath {
             node = node.child;
         }
 
-        return useNextValue(node, p, function);
+        return wrappedAccess(node, p, function);
     }
 
-    public <T> T access(JSONObject jsonObject, Function<JSONPathReference<?, ?>, T> function, boolean isForcedAccess) throws JSONInaccessiblePathException {
-        return onLastNode(jsonObject, (lastStructure, nodeParameter) -> {
+    public <T> @Nullable T access(JSONObject jsonObject, Function<JSONPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws JSONInaccessiblePathException {
+        return onTermination(jsonObject, (lastStructure, nodeParameter) -> {
             final JSONPathReference<?, ?> reference = switch (lastStructure) {
                 case JSONObject object -> new JSONPathReference.JSONObjectPathReference(object, (String) nodeParameter);
                 case JSONArray array -> new JSONPathReference.JSONArrayPathReference(array, (Integer) nodeParameter);
@@ -241,14 +241,35 @@ public final class JSONPath {
             this.parameter = parameter;
         }
 
+        /**
+         * パスの参照先が存在するかどうかを返します。
+         * @return 存在すれば真。
+         */
         public abstract boolean has();
 
+        /**
+         * パスの参照先に格納された値の型を取得します。
+         * @return 型オブジェクト。
+         */
         public abstract JSONValueType<?> getType();
 
+        /**
+         * パスの参照先に格納された値を取得します。
+         * @param type 期待する型。
+         * @return 格納された値。
+         */
         public abstract <U extends JSONValue<?>> U get(JSONValueType<U> type);
 
+        /**
+         * パスの参照先を任意の値で上書きします。
+         * @param value 任意の値。
+         */
         public abstract void set(Object value);
 
+        /**
+         * パスの参照先の値を削除します。
+         * @return 削除に成功した場合、真。
+         */
         public abstract boolean delete();
 
         private static final class JSONObjectPathReference extends JSONPathReference<JSONObject, String> {

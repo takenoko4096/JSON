@@ -38,7 +38,7 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         return value.isEmpty();
     }
 
-    public JSONValueType<?> getTypeAt(int index) {
+    public JSONValueType<?> getTypeAt(int index) throws IllegalArgumentException {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
         }
@@ -47,7 +47,7 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         else return JSONValueType.get(value.get(value.size() + index));
     }
 
-    public <T extends JSONValue<?>> T get(int index, JSONValueType<T> type) {
+    public <T extends JSONValue<?>> T get(int index, JSONValueType<T> type) throws IllegalArgumentException {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
         }
@@ -60,7 +60,7 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         else return type.toJSON(value.get(value.size() + index));
     }
 
-    public void add(int index, @Nullable Object value) {
+    public void add(int index, @Nullable Object value) throws IllegalArgumentException {
         if (index > this.value.size()) {
             throw new IllegalArgumentException("そのインデックスは使用できません");
         }
@@ -73,7 +73,7 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         this.value.add(JSONValueType.get(value).toJSON(value));
     }
 
-    public void set(int index, @Nullable Object value) {
+    public void set(int index, @Nullable Object value) throws IllegalArgumentException {
         if (index >= this.value.size()) {
             throw new IllegalArgumentException("そのインデックスは使用できません");
         }

@@ -148,7 +148,9 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
 
     public boolean has(JSONPath path) {
         try {
-            return path.access(this, JSONPath.JSONPathReference::has, false);
+            final Boolean flag = path.access(this, JSONPath.JSONPathReference::has, false);
+            if (flag == null) throw new IllegalStateException("NEVER HAPPENS");
+            return flag;
         }
         catch (JSONPath.JSONInaccessiblePathException e) {
             return false;
@@ -157,7 +159,9 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
 
     public JSONValueType<?> getTypeOf(JSONPath path) {
         try {
-            return path.access(this, JSONPath.JSONPathReference::getType, false);
+            final JSONValueType<?> type = path.access(this, JSONPath.JSONPathReference::getType, false);
+            if (type == null) throw new IllegalStateException("NEVER HAPPENS");
+            return type;
         }
         catch (JSONPath.JSONInaccessiblePathException e) {
             throw new IllegalStateException(e);
@@ -166,7 +170,9 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
 
     public <T extends JSONValue<?>> T get(JSONPath path, JSONValueType<T> type) {
         try {
-            return path.access(this, reference -> reference.get(type), false);
+            final T value = path.access(this, reference -> reference.get(type), false);
+            if (value == null) throw new IllegalStateException("NEVER HAPPENS");
+            return value;
         }
         catch (JSONPath.JSONInaccessiblePathException e) {
             throw new IllegalStateException(e);
@@ -175,7 +181,9 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
 
     public boolean delete(JSONPath path) {
         try {
-            return path.access(this, JSONPath.JSONPathReference::delete, false);
+            final Boolean flag = path.access(this, JSONPath.JSONPathReference::delete, false);
+            if (flag == null) throw new IllegalStateException("NEVER HAPPENS");
+            return flag;
         }
         catch (JSONPath.JSONInaccessiblePathException e) {
             throw new IllegalStateException(e);

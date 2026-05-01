@@ -6,6 +6,7 @@ plugins {
 
 group = "io.github.takenoko4096"
 version = "0.1.0"
+description = "library of mojangson"
 
 repositories {
     mavenCentral()
@@ -28,13 +29,15 @@ tasks {
     }
 }
 
+val gitHubUserName = "takenoko4096"
+
 mavenPublishing {
     publishToMavenCentral()
 
     pom {
-        name.set("mojangson-bridge")
-        description.set("library of mojangson")
-        url.set("https://github.com/takenoko4096/mojangson-bridge")
+        name.set(project.name)
+        description.set(project.description)
+        url.set("https://github.com/$gitHubUserName/${project.name}")
 
         licenses {
             license {
@@ -45,16 +48,16 @@ mavenPublishing {
 
         developers {
             developer {
-                id.set("takenoko4096")
-                name.set("takenoko4096")
-                url.set("https://github.com/takenoko4096/")
+                id.set(gitHubUserName)
+                name.set(gitHubUserName)
+                url.set("https://github.com/$gitHubUserName/")
             }
         }
 
         scm {
-            connection.set("scm:git:git://github.com/takenoko4096/mojangson-bridge.git")
-            developerConnection.set("scm:git:ssh://github.com/takenoko4096/mojangson-bridge.git")
-            url.set("https://github.com/takenoko4096/mojangson-bridge/")
+            connection.set("scm:git:git://github.com/$gitHubUserName/${project.name}.git")
+            developerConnection.set("scm:git:ssh://github.com/$gitHubUserName/${project.name}.git")
+            url.set("https://github.com/$gitHubUserName/${project.name}/")
         }
     }
 }

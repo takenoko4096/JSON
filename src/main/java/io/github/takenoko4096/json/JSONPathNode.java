@@ -8,6 +8,11 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.function.BiFunction;
 
+/**
+ * jsonパスを構成する各ノードを表現します。
+ * @param <S> 親となるjson構造
+ * @param <T> 子アクセス
+ */
 @NullMarked
 public abstract class JSONPathNode<S extends JSONStructure, T> {
     protected final T parameter;
@@ -40,7 +45,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public <U> U access(JSONObject structure, BiFunction<JSONObject, Object, U> function) {
+        public <U> @Nullable U access(JSONObject structure, BiFunction<JSONObject, Object, @Nullable U> function) {
             return function.apply(structure, parameter);
         }
 
@@ -67,7 +72,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public <U> @Nullable U access(JSONArray structure, BiFunction<JSONArray, Object, U> function) {
+        public <U> @Nullable U access(JSONArray structure, BiFunction<JSONArray, Object, @Nullable U> function) {
             return function.apply(structure, parameter);
         }
 
@@ -92,31 +97,25 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
             if (!structure.has(parameter.a())) return null;
             else {
                 final JSONObject value = structure.get(parameter.a(), JSONValueTypes.OBJECT);
+                final JSONObject condition = parameter.b();
 
-                if (value instanceof JSONObject target) {
-                    final JSONObject condition = parameter.b();
-                    if (target.isSuperOf(condition)) {
-                        return value;
-                    }
-                    else return null;
+                if (value.isSuperOf(condition)) {
+                    return value;
                 }
                 else return null;
             }
         }
 
         @Override
-        public <U> @Nullable U access(JSONObject structure, BiFunction<JSONObject, Object, U> function) {
+        public <U> @Nullable U access(JSONObject structure, BiFunction<JSONObject, Object, @Nullable U> function) {
             if (!structure.has(parameter.a())) return null;
             else {
                 final JSONObject value = structure.get(parameter.a(), JSONValueTypes.OBJECT);
+                final JSONObject condition = parameter.b();
 
-                if (value instanceof JSONObject target) {
-                    final JSONObject condition = parameter.b();
-                    if (target.isSuperOf(condition)) {
-                        // return value;
-                        return function.apply(structure, parameter.a());
-                    }
-                    else return null;
+                if (value.isSuperOf(condition)) {
+                    // return value;
+                    return function.apply(structure, parameter.a());
                 }
                 else return null;
             }
@@ -147,11 +146,8 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
 
                 final JSONObject element = structure.get(i, JSONValueTypes.OBJECT);
 
-                if (element instanceof JSONObject object) {
-                    if (object.isSuperOf(parameter)) {
-                        return element;
-                    }
-                    else return null;
+                if (element.isSuperOf(parameter)) {
+                    return element;
                 }
                 else return null;
             }
@@ -160,7 +156,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public <U> @Nullable U access(JSONArray structure, BiFunction<JSONArray, Object, U> function) {
+        public <U> @Nullable U access(JSONArray structure, BiFunction<JSONArray, Object, @Nullable U> function) {
             for (int i = 0; i < structure.length(); i++) {
                 if (structure.getTypeAt(i) != JSONValueTypes.OBJECT) {
                     continue;
@@ -168,12 +164,8 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
 
                 final JSONObject element = structure.get(i, JSONValueTypes.OBJECT);
 
-                if (element instanceof JSONObject object) {
-                    if (object.isSuperOf(parameter)) {
-                        // return element;
-                        return function.apply(structure, i);
-                    }
-                    else return null;
+                if (element.isSuperOf(parameter)) {
+                    return function.apply(structure, i);
                 }
                 else return null;
             }

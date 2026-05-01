@@ -19,7 +19,7 @@ public final class MojangsonPath {
         this.root = root;
     }
 
-    private @Nullable MojangsonValue<?> getNextValue(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p) {
+    private @Nullable MojangsonValue<?> wrappedGet(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p) {
         switch (node) {
             case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(p instanceof MojangsonCompound object)) {
@@ -49,7 +49,7 @@ public final class MojangsonPath {
         }
     }
 
-    private <U> @Nullable U useNextValue(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p, BiFunction<MojangsonStructure, Object, U> function) {
+    private <U> @Nullable U wrappedAccess(MojangsonPathNode<?, ?> node, @Nullable MojangsonValue<?> p, BiFunction<MojangsonStructure, Object, @Nullable U> function) {
         switch (node) {
             case MojangsonPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(p instanceof MojangsonCompound object)) {
@@ -84,12 +84,12 @@ public final class MojangsonPath {
         }
     }
 
-    private <U> @Nullable U onLastNode(MojangsonCompound compound, BiFunction<MojangsonStructure, Object, U> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
+    private <U> @Nullable U onTermination(MojangsonCompound compound, BiFunction<MojangsonStructure, Object, @Nullable U> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
         MojangsonPathNode<?, ?> node = root;
         MojangsonValue<?> p = compound;
 
         while (node.child != null) {
-            var q = getNextValue(node, p);
+            var q = wrappedGet(node, p);
 
             if (q == null) {
                 if (node instanceof MojangsonPathNode.ObjectKeyNode n && isForcedAccess) {
@@ -105,11 +105,11 @@ public final class MojangsonPath {
             node = node.child;
         }
 
-        return useNextValue(node, p, function);
+        return wrappedAccess(node, p, function);
     }
 
     public <T> @Nullable T access(MojangsonCompound MojangsonCompound, Function<MojangsonPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws MojangsonInaccessiblePathException {
-        return onLastNode(MojangsonCompound, (lastStructure, nodeParameter) -> {
+        return onTermination(MojangsonCompound, (lastStructure, nodeParameter) -> {
             final MojangsonPathReference<?, ?> reference = switch (lastStructure) {
                 case MojangsonCompound object -> new MojangsonPathReference.MojangsonCompoundPathReference(object, (String) nodeParameter);
                 case MojangsonList array -> new MojangsonPathReference.MojangsonListPathReference(array, (Integer) nodeParameter);

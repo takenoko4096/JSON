@@ -93,12 +93,9 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
             else {
                 final MojangsonCompound value = structure.get(parameter.a(), MojangsonValueTypes.COMPOUND);
 
-                if (value instanceof MojangsonCompound target) {
-                    final MojangsonCompound condition = parameter.b();
-                    if (target.isSuperOf(condition)) {
-                        return value;
-                    }
-                    else return null;
+                final MojangsonCompound condition = parameter.b();
+                if (value.isSuperOf(condition)) {
+                    return value;
                 }
                 else return null;
             }
@@ -110,13 +107,10 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
             else {
                 final MojangsonCompound value = structure.get(parameter.a(), MojangsonValueTypes.COMPOUND);
 
-                if (value instanceof MojangsonCompound target) {
-                    final MojangsonCompound condition = parameter.b();
-                    if (target.isSuperOf(condition)) {
-                        // return value;
-                        return function.apply(structure, parameter.a());
-                    }
-                    else return null;
+                final MojangsonCompound condition = parameter.b();
+                if (value.isSuperOf(condition)) {
+                    // return value;
+                    return function.apply(structure, parameter.a());
                 }
                 else return null;
             }
@@ -147,11 +141,8 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
 
                 final MojangsonCompound element = structure.get(i, MojangsonValueTypes.COMPOUND);
 
-                if (element instanceof MojangsonCompound object) {
-                    if (object.isSuperOf(parameter)) {
-                        return element;
-                    }
-                    else return null;
+                if (element.isSuperOf(parameter)) {
+                    return element;
                 }
                 else return null;
             }
@@ -160,7 +151,7 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
         }
 
         @Override
-        public <U> @Nullable U access(MojangsonList structure, BiFunction<MojangsonList, Object, U> function) {
+        public <U> @Nullable U access(MojangsonList structure, BiFunction<MojangsonList, Object, @Nullable U> function) {
             for (int i = 0; i < structure.length(); i++) {
                 if (structure.getTypeAt(i) != MojangsonValueTypes.LIST) {
                     continue;
@@ -168,12 +159,8 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
 
                 final MojangsonCompound element = structure.get(i, MojangsonValueTypes.COMPOUND);
 
-                if (element instanceof MojangsonCompound object) {
-                    if (object.isSuperOf(parameter)) {
-                        // return element;
-                        return function.apply(structure, i);
-                    }
-                    else return null;
+                if (element.isSuperOf(parameter)) {
+                    return function.apply(structure, i);
                 }
                 else return null;
             }
@@ -189,12 +176,6 @@ public abstract class MojangsonPathNode<S extends MojangsonStructure, T> {
         @Override
         public String toString() {
             return "index_finder<" + parameter + ">";
-        }
-
-        public static final class MojangsonArrayIndexNotFoundException extends Exception {
-            private MojangsonArrayIndexNotFoundException(String message) {
-                super(message);
-            }
         }
     }
 
