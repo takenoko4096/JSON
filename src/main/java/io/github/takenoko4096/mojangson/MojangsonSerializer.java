@@ -23,6 +23,12 @@ public class MojangsonSerializer {
         this.asJson = asJson;
     }
 
+    /**
+     * mojangson構造を文字列としてシリアライズします。
+     * @param structure mojangson構造体。
+     * @return 改行・空白文字によるインデントを含む文字列。
+     * @throws MojangsonSerializationException シリアライズに失敗した場合。
+     */
     public String serialize(MojangsonStructure structure) throws MojangsonSerializationException {
         return serialize(structure, 1).toString();
     }
@@ -213,7 +219,7 @@ public class MojangsonSerializer {
 
     /**
      * mojangson構造を文字列としてシリアライズします。
-     * @param structure mojangson構造体
+     * @param structure mojangson構造体。
      * @param asJson trueの場合、json形式でシリアライズされます。
      * @return 改行・空白文字によるインデントを含む文字列。
      */
@@ -223,7 +229,7 @@ public class MojangsonSerializer {
 
     /**
      * mojangson構造を文字列としてシリアライズします。
-     * @param structure mojangson構造体
+     * @param structure mojangson構造体。
      * @return 改行・空白文字によるインデントを含む文字列。
      */
     public static String structure(MojangsonStructure structure) throws MojangsonSerializationException {

@@ -112,8 +112,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">メソッド</div>
 <div class="table-header col-last">説明</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serialize(io.github.takenoko4096.json.values.JSONStructure)" class="member-name-link">serialize</a><wbr>(<a href="values/JSONStructure.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONStructure</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#serialize(io.github.takenoko4096.json.values.JSONStructure)" class="member-name-link">serialize</a><wbr>(<a href="values/JSONStructure.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONStructure</a>&nbsp;structure)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">json構造を文字列としてシリアライズします。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#structure(io.github.takenoko4096.json.values.JSONStructure)" class="member-name-link">structure</a><wbr>(<a href="values/JSONStructure.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONStructure</a>&nbsp;structure)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -156,7 +158,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="serialize(io.github.takenoko4096.json.values.JSONStructure)">
 <h3>serialize</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></span>&nbsp;<span class="element-name">serialize</span><wbr><span class="parameters">(<a href="values/JSONStructure.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONStructure</a>&nbsp;value)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></span>&nbsp;<span class="element-name">serialize</span><wbr><span class="parameters">(<a href="values/JSONStructure.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONStructure</a>&nbsp;structure)</span></div>
+<div class="block">json構造を文字列としてシリアライズします。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>structure</code> - json構造体</dd>
+<dt>戻り値:</dt>
+<dd>改行・空白文字によるインデントを含む文字列。</dd>
+</dl>
 </div>
 </section>
 </li>

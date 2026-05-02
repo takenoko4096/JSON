@@ -164,7 +164,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readAsString()" class="member-name-link">readAsString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">ファイルの内容を文字列として読み取り、文字列として返します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#size()" class="member-name-link">size</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -182,7 +184,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeAsString(java.lang.String)" class="member-name-link">writeAsString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&nbsp;json)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">ファイルの内容を引数に渡された文字列で上書きします。</div>
+</div>
 </div>
 </div>
 </div>
@@ -240,7 +244,7 @@ loadScripts(document, 'script');</script>
 <div class="block">java.io.Fileとして取得します。</div>
 <dl class="notes">
 <dt>戻り値:</dt>
-<dd>ラップされていたFileオブジェクト</dd>
+<dd>ラップされていたFileオブジェクト。</dd>
 </dl>
 </div>
 </section>
@@ -251,9 +255,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></span>&nbsp;<span class="element-name">readAsString</span>()
                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></span></div>
+<div class="block">ファイルの内容を文字列として読み取り、文字列として返します。</div>
 <dl class="notes">
+<dt>戻り値:</dt>
+<dd>空白文字・改行を含む文字列。</dd>
 <dt>例外:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code> - ファイルが存在しない、またはI/O例外の場合。</dd>
 </dl>
 </div>
 </section>
@@ -264,9 +271,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeAsString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a>&nbsp;json)</span>
                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></span></div>
+<div class="block">ファイルの内容を引数に渡された文字列で上書きします。</div>
 <dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>json</code> - 空白文字・改行を含む文字列。</dd>
 <dt>例外:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code> - ファイルが存在しない、またはI/O例外の場合。</dd>
 </dl>
 </div>
 </section>

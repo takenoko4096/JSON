@@ -113,12 +113,6 @@ public final class JSONObject extends JSONValue<Map<String, JSONValue<?>>> imple
         return value.keySet();
     }
 
-    public void merge(JSONObject jsonObject) {
-        for (final String key : jsonObject.keys()) {
-            set(key, jsonObject.value.get(key));
-        }
-    }
-
     /**
      * このオブジェクトを再帰的にMapに変換します。
      * @return Map形式のディープコピー。

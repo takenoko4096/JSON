@@ -47,6 +47,11 @@ public abstract class MojangsonValue<T> {
         return value.toString();
     }
 
+    /**
+     * 渡されたJavaの値に対応するmojangson構造を返します。
+     * @param value nullを含む任意のオブジェクト。
+     * @return 引数をmojangson構造に変換したオブジェクト。MojangsonValueが渡された場合、引数をそのまま返します。
+     */
     public static MojangsonValue<?> valueOf(@Nullable Object value) {
         return switch (value) {
             case null -> MojangsonNull.NULL;

@@ -18,8 +18,13 @@ public final class JSONSerializer {
         this.indentationSpaceCount = indentationSpaceCount;
     }
 
-    public String serialize(JSONStructure value) {
-        return serialize(value, 1).toString();
+    /**
+     * json構造を文字列としてシリアライズします。
+     * @param structure json構造体
+     * @return 改行・空白文字によるインデントを含む文字列。
+     */
+    public String serialize(JSONStructure structure) {
+        return serialize(structure, 1).toString();
     }
 
     private StringBuilder serialize(@Nullable Object value, int indentation) throws JSONSerializationException {

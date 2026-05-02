@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * mojangsonにおけるint[]を表現します。
+ */
 @NullMarked
 public class MojangsonIntArray extends MojangsonArray<int[], MojangsonInt> {
     public MojangsonIntArray(int[] value) {

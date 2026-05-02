@@ -64,11 +64,11 @@ loadScripts(document, 'script');</script>
 </li>
 <li><a href="#method-detail" tabindex="0">メソッドの詳細</a>
 <ol class="toc-list">
-<li><a href="#getFile()" tabindex="0">getFile()</a></li>
+<li><a href="#toFile()" tabindex="0">toFile()</a></li>
 <li><a href="#exists()" tabindex="0">exists()</a></li>
 <li><a href="#create()" tabindex="0">create()</a></li>
 <li><a href="#delete()" tabindex="0">delete()</a></li>
-<li><a href="#getSize()" tabindex="0">getSize()</a></li>
+<li><a href="#size()" tabindex="0">size()</a></li>
 <li><a href="#readAsRaw()" tabindex="0">readAsRaw()</a></li>
 <li><a href="#writeAsRaw(io.github.takenoko4096.mojangson.values.MojangsonCompound)" tabindex="0">writeAsRaw(MojangsonCompound)</a></li>
 <li><a href="#editAsRaw(java.util.function.Function)" tabindex="0">editAsRaw(Function)</a></li>
@@ -96,6 +96,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations">@NullMarked
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">NbtFile</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a></span></div>
+<div class="block">nbt形式のファイルを表現します。</div>
 </div>
 </section>
 <section class="summary">
@@ -130,46 +131,74 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">説明</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">空のファイルを作成します。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#delete()" class="member-name-link">delete</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">ファイルを削除します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#editAsCompressed(java.util.function.Function)" class="member-name-link">editAsCompressed</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="java.util.function内のクラスまたはインタフェース" class="external-link">Function</a>&lt;<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>, <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&gt;&nbsp;function)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">GZip圧縮された形式のファイルとしてバイナリを編集します。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#editAsRaw(java.util.function.Function)" class="member-name-link">editAsRaw</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="java.util.function内のクラスまたはインタフェース" class="external-link">Function</a>&lt;<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>, <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&gt;&nbsp;function)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">圧縮されていない形式のファイルとしてバイナリを編集します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#editAuto(java.util.function.Function)" class="member-name-link">editAuto</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="java.util.function内のクラスまたはインタフェース" class="external-link">Function</a>&lt;<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>, <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&gt;&nbsp;function)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">GZip圧縮されているかどうかを調べ、適切な形式でバイナリをデコードして編集を行い、再度適切な形式でエンコードします。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#exists()" class="member-name-link">exists</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFile()" class="member-name-link">getFile</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSize()" class="member-name-link">getSize</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">ファイルが存在するかどうかを返します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCompressed()" class="member-name-link">isCompressed</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">GZip圧縮された形式のファイルであるかどうかを返します。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readAsCompressed()" class="member-name-link">readAsCompressed</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">GZip圧縮された形式のファイルとしてバイナリを読み取ります。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readAsRaw()" class="member-name-link">readAsRaw</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">圧縮されていない形式のファイルとしてバイナリを読み取ります。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readAuto()" class="member-name-link">readAuto</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">GZip圧縮されているかどうかを調べ、適切な形式でバイナリをデコードして読み取ります。</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#size()" class="member-name-link">size</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">ファイルサイズを取得します。</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toFile()" class="member-name-link">toFile</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">java.io.Fileとして取得します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeAsCompressed(io.github.takenoko4096.mojangson.values.MojangsonCompound)" class="member-name-link">writeAsCompressed</a><wbr>(<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&nbsp;compound)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">データをGZip圧縮された形式のバイナリに変換して書き込みます。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#writeAsRaw(io.github.takenoko4096.mojangson.values.MojangsonCompound)" class="member-name-link">writeAsRaw</a><wbr>(<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&nbsp;compound)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">データを圧縮されていない形式のバイナリに変換して書き込みます。</div>
+</div>
 </div>
 </div>
 </div>
@@ -220,10 +249,15 @@ loadScripts(document, 'script');</script>
 <h2>メソッドの詳細</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="getFile()">
-<h3>getFile</h3>
+<section class="detail" id="toFile()">
+<h3>toFile</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a></span>&nbsp;<span class="element-name">getFile</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a></span>&nbsp;<span class="element-name">toFile</span>()</div>
+<div class="block">java.io.Fileとして取得します。</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>ラップされていたFileオブジェクト。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -232,6 +266,11 @@ loadScripts(document, 'script');</script>
 <h3>exists</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">exists</span>()</div>
+<div class="block">ファイルが存在するかどうかを返します。</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>存在する場合に真。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -241,9 +280,10 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">create</span>()
             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></span></div>
+<div class="block">空のファイルを作成します。</div>
 <dl class="notes">
 <dt>例外:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code> - 既に存在する、またはI/O例外の場合。</dd>
 </dl>
 </div>
 </section>
@@ -254,22 +294,26 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">delete</span>()
             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></span></div>
+<div class="block">ファイルを削除します。</div>
 <dl class="notes">
 <dt>例外:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code> - ファイルが存在しない、またはI/O例外の場合。</dd>
 </dl>
 </div>
 </section>
 </li>
 <li>
-<section class="detail" id="getSize()">
-<h3>getSize</h3>
+<section class="detail" id="size()">
+<h3>size</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">getSize</span>()
-             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">size</span>()
+          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></span></div>
+<div class="block">ファイルサイズを取得します。</div>
 <dl class="notes">
+<dt>戻り値:</dt>
+<dd>ファイルサイズ (bytes)。</dd>
 <dt>例外:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalStateException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalStateException</a></code> - ファイルが存在しない、またはI/O例外の場合。</dd>
 </dl>
 </div>
 </section>
@@ -280,9 +324,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">readAsRaw</span>()
                             throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">圧縮されていない形式のファイルとしてバイナリを読み取ります。</div>
 <dl class="notes">
+<dt>戻り値:</dt>
+<dd>デシリアライズ結果のコンパウンド。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合。</dd>
 </dl>
 </div>
 </section>
@@ -293,9 +340,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeAsRaw</span><wbr><span class="parameters">(<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&nbsp;compound)</span>
                 throws <span class="exceptions"><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></span></div>
+<div class="block">データを圧縮されていない形式のバイナリに変換して書き込みます。</div>
 <dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>compound</code> - 書き込むデータのルートコンパウンド。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code></dd>
+<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code> - エンコードに失敗した場合。</dd>
 </dl>
 </div>
 </section>
@@ -307,10 +357,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">editAsRaw</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="java.util.function内のクラスまたはインタフェース" class="external-link">Function</a>&lt;<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>, <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&gt;&nbsp;function)</span>
                throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a>,
 <a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></span></div>
+<div class="block">圧縮されていない形式のファイルとしてバイナリを編集します。</div>
 <dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>function</code> - 構造を編集する関数。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
-<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code></dd>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合。</dd>
+<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code> - エンコードに失敗した場合。</dd>
 </dl>
 </div>
 </section>
@@ -321,9 +374,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">readAsCompressed</span>()
                                    throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">GZip圧縮された形式のファイルとしてバイナリを読み取ります。</div>
 <dl class="notes">
+<dt>戻り値:</dt>
+<dd>デシリアライズ結果のコンパウンド。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合。</dd>
 </dl>
 </div>
 </section>
@@ -334,9 +390,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeAsCompressed</span><wbr><span class="parameters">(<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&nbsp;compound)</span>
                        throws <span class="exceptions"><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></span></div>
+<div class="block">データをGZip圧縮された形式のバイナリに変換して書き込みます。</div>
 <dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>compound</code> - 書き込むデータのルートコンパウンド。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code></dd>
+<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code> - エンコードに失敗した場合。</dd>
 </dl>
 </div>
 </section>
@@ -348,10 +407,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">editAsCompressed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="java.util.function内のクラスまたはインタフェース" class="external-link">Function</a>&lt;<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>, <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&gt;&nbsp;function)</span>
                       throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a>,
 <a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></span></div>
+<div class="block">GZip圧縮された形式のファイルとしてバイナリを編集します。</div>
 <dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>function</code> - 構造を編集する関数。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
-<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code></dd>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合。</dd>
+<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code> - エンコードに失敗した場合。</dd>
 </dl>
 </div>
 </section>
@@ -362,9 +424,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCompressed</span>()
                      throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">GZip圧縮された形式のファイルであるかどうかを返します。</div>
 <dl class="notes">
+<dt>戻り値:</dt>
+<dd>GZip圧縮されているならば、真。バイト列が短すぎる場合例外を投げます。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合、またはバイト列が短すぎて圧縮形式を判別できない場合。</dd>
 </dl>
 </div>
 </section>
@@ -375,9 +440,12 @@ loadScripts(document, 'script');</script>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">readAuto</span>()
                            throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">GZip圧縮されているかどうかを調べ、適切な形式でバイナリをデコードして読み取ります。</div>
 <dl class="notes">
+<dt>戻り値:</dt>
+<dd>デシリアライズ結果のコンパウンド。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合、またはバイト列が短すぎて圧縮形式を判別できない場合。</dd>
 </dl>
 </div>
 </section>
@@ -389,10 +457,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">editAuto</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/function/Function.html" title="java.util.function内のクラスまたはインタフェース" class="external-link">Function</a>&lt;<a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>, <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a>&gt;&nbsp;function)</span>
               throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a>,
 <a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></span></div>
+<div class="block">GZip圧縮されているかどうかを調べ、適切な形式でバイナリをデコードして編集を行い、再度適切な形式でエンコードします。</div>
 <dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>function</code> - 構造を編集する関数。</dd>
 <dt>例外:</dt>
-<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
-<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code></dd>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合、またはバイト列が短すぎて圧縮形式を判別できない場合。</dd>
+<dd><code><a href="NbtWriteException.html" title="io.github.takenoko4096.nbt内のクラス">NbtWriteException</a></code> - エンコードに失敗した場合。</dd>
 </dl>
 </div>
 </section>

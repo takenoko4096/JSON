@@ -10,21 +10,24 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.zip.GZIPOutputStream;
 
+/**
+ * nbtバイナリをエンコードするクラス。
+ */
 @NullMarked
 public final class NbtEncoder {
-    public static final byte TAG_END = 0;
-    public static final byte TAG_BYTE = 1;
-    public static final byte TAG_SHORT = 2;
-    public static final byte TAG_INT = 3;
-    public static final byte TAG_LONG = 4;
-    public static final byte TAG_FLOAT = 5;
-    public static final byte TAG_DOUBLE = 6;
-    public static final byte TAG_BYTE_ARRAY = 7;
-    public static final byte TAG_STRING = 8;
-    public static final byte TAG_LIST = 9;
-    public static final byte TAG_COMPOUND = 10;
-    public static final byte TAG_INT_ARRAY = 11;
-    public static final byte TAG_LONG_ARRAY = 12;
+    private static final byte TAG_END = 0;
+    private static final byte TAG_BYTE = 1;
+    private static final byte TAG_SHORT = 2;
+    private static final byte TAG_INT = 3;
+    private static final byte TAG_LONG = 4;
+    private static final byte TAG_FLOAT = 5;
+    private static final byte TAG_DOUBLE = 6;
+    private static final byte TAG_BYTE_ARRAY = 7;
+    private static final byte TAG_STRING = 8;
+    private static final byte TAG_LIST = 9;
+    private static final byte TAG_COMPOUND = 10;
+    private static final byte TAG_INT_ARRAY = 11;
+    private static final byte TAG_LONG_ARRAY = 12;
 
     private final DataOutputStream stream;
 
@@ -132,6 +135,12 @@ public final class NbtEncoder {
         }
     }
 
+    /**
+     * 引数に渡されたコンパウンドをGZip圧縮された形式のバイナリに変換してファイルに書き込みます。
+     * @param file 書き込み先のファイル。
+     * @param compound 書き込むデータのルートコンパウンド。
+     * @throws NbtWriteException エンコードに失敗した場合。
+     */
     public static void compress(File file, MojangsonCompound compound) {
         try (final DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(new GZIPOutputStream(new FileOutputStream(file))))) {
             final var writer = new NbtEncoder(stream, new String(new char[0]), compound);
@@ -142,6 +151,12 @@ public final class NbtEncoder {
         }
     }
 
+    /**
+     * 引数に渡されたコンパウンドを圧縮されていない形式のバイナリに変換してファイルに書き込みます。
+     * @param file 書き込み先のファイル。
+     * @param compound 書き込むデータのルートコンパウンド。
+     * @throws NbtWriteException エンコードに失敗した場合。
+     */
     public static void raw(File file, MojangsonCompound compound) {
         try (final DataOutputStream stream = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(file)))) {
             final var writer = new NbtEncoder(stream, new String(new char[0]), compound);
@@ -152,6 +167,12 @@ public final class NbtEncoder {
         }
     }
 
+    /**
+     * 引数に渡されたコンパウンドをGZip圧縮された形式のバイナリに変換して返します。
+     * @param compound 変換するデータのルートコンパウンド。
+     * @throws NbtWriteException エンコードに失敗した場合。
+     * @return エンコード結果のバイト列。
+     */
     public static byte[] compress(MojangsonCompound compound) {
         final ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
 
@@ -166,6 +187,12 @@ public final class NbtEncoder {
         return stream1.toByteArray();
     }
 
+    /**
+     * 引数に渡されたコンパウンドを圧縮されていない形式のバイナリに変換して返します。
+     * @param compound 変換するデータのルートコンパウンド。
+     * @throws NbtWriteException エンコードに失敗した場合。
+     * @return エンコード結果のバイト列。
+     */
     public static byte[] raw(MojangsonCompound compound) {
         final ByteArrayOutputStream stream1 = new ByteArrayOutputStream();
 

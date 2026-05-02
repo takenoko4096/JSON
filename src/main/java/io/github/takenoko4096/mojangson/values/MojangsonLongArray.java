@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * mojangsonにおけるlong[]を表現します。
+ */
 @NullMarked
 public class MojangsonLongArray extends MojangsonArray<long[], MojangsonLong> {
     public MojangsonLongArray(long[] value) {

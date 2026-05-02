@@ -6,6 +6,11 @@ import org.jspecify.annotations.NullMarked;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * mojangsonにおける配列を表現します。
+ * @param <T> 配列型。
+ * @param <U> mojangsonにおける表現。
+ */
 @NullMarked
 public abstract class MojangsonArray<T, U extends MojangsonValue<?>> extends MojangsonValue<T> implements MojangsonIterable<U> {
     protected MojangsonArray(T value) {

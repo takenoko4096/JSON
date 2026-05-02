@@ -85,7 +85,7 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<h1 title="クラス TypedJSONArray" class="title">クラス TypedJSONArray&lt;<span id="type-param-T">T extends <a href="../JSONValue.html" title="io.github.takenoko4096.json内のクラス">JSONValue</a>&lt;?&gt;</span>&gt;</h1>
+<h1 title="クラス TypedJSONArray" class="title">クラス TypedJSONArray&lt;T extends <a href="../JSONValue.html" title="io.github.takenoko4096.json内のクラス">JSONValue</a>&lt;?&gt;&gt;</h1>
 </div>
 <div class="inheritance" title="継承ツリー"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="../JSONValue.html" title="io.github.takenoko4096.json内のクラス">io.github.takenoko4096.json.JSONValue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;T&gt;&gt;
@@ -93,6 +93,10 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>型パラメータ:</dt>
+<dd><span id="type-param-T"><code>T</code> - 要素の型。</span></dd>
+</dl>
 <dl class="notes">
 <dt>すべての実装されたインタフェース:</dt>
 <dd><code><a href="JSONIterable.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONIterable</a>&lt;T&gt;, <a href="JSONStructure.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONStructure</a>, <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Iterable.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Iterable</a>&lt;T&gt;</code></dd>
@@ -103,6 +107,7 @@ loadScripts(document, 'script');</script>
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">TypedJSONArray&lt;T extends <a href="../JSONValue.html" title="io.github.takenoko4096.json内のクラス">JSONValue</a>&lt;?&gt;&gt;</span>
 <span class="extends-implements">extends <a href="../JSONValue.html" title="io.github.takenoko4096.json内のクラス">JSONValue</a>&lt;<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;T&gt;&gt;
 implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values内のインタフェース">JSONIterable</a>&lt;T&gt;</span></div>
+<div class="block">型付きのJSONArray。このクラスにラップされる要素はすべてT型であることが確約されます。</div>
 </div>
 </section>
 <section class="summary">
@@ -146,10 +151,14 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(int,T)" class="member-name-link">add</a><wbr>(int&nbsp;index,
  <a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">引数に渡されたインデックスに値を格納し、そのインデックス以降の値を後ろに追いやります。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#add(T)" class="member-name-link">add</a><wbr>(<a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">配列の後ろに引数に渡された値を追加します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#clear()" class="member-name-link">clear</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -167,7 +176,9 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#get(int)" class="member-name-link">get</a><wbr>(int&nbsp;index)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">引数に渡されたインデックスに格納された値を返します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../JSONValueType.html" title="io.github.takenoko4096.json内のクラス">JSONValueType</a><wbr>&lt;?&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -194,13 +205,17 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set(int,T)" class="member-name-link">set</a><wbr>(int&nbsp;index,
  <a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">引数に渡されたインデックスの値を上書きします。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="JSONArray.html" title="io.github.takenoko4096.json.values内のクラス">JSONArray</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#untyped()" class="member-name-link">untyped</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">型付き配列を型の保証のないJSONArrayに変換します。</div>
+</div>
 </div>
 </div>
 </div>
@@ -305,7 +320,17 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 <section class="detail" id="get(int)">
 <h3>get</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(int&nbsp;index)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a></span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(int&nbsp;index)</span>
+      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalArgumentException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalArgumentException</a></span></div>
+<div class="block">引数に渡されたインデックスに格納された値を返します。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>index</code> - インデックス。</dd>
+<dt>戻り値:</dt>
+<dd>インデックスに格納された値。</dd>
+<dt>例外:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalArgumentException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalArgumentException</a></code> - インデックスが存在しない場合。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -314,7 +339,16 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 <h3 id="add(int,io.github.takenoko4096.json.JSONValue)">add</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(int&nbsp;index,
- <a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</span></div>
+ <a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</span>
+         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalArgumentException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalArgumentException</a></span></div>
+<div class="block">引数に渡されたインデックスに値を格納し、そのインデックス以降の値を後ろに追いやります。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>index</code> - インデックス。</dd>
+<dd><code>value</code> - 格納する値。</dd>
+<dt>例外:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalArgumentException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalArgumentException</a></code> - インデックスが不正な場合。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -323,6 +357,11 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 <h3 id="add(io.github.takenoko4096.json.JSONValue)">add</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">add</span><wbr><span class="parameters">(<a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</span></div>
+<div class="block">配列の後ろに引数に渡された値を追加します。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>value</code> - 格納する値。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -331,7 +370,16 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 <h3 id="set(int,io.github.takenoko4096.json.JSONValue)">set</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set</span><wbr><span class="parameters">(int&nbsp;index,
- <a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</span></div>
+ <a href="#type-param-T" title="TypedJSONArray内の型パラメータ">T</a>&nbsp;value)</span>
+         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalArgumentException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalArgumentException</a></span></div>
+<div class="block">引数に渡されたインデックスの値を上書きします。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>index</code> - インデックス。</dd>
+<dd><code>value</code> - 格納する値。</dd>
+<dt>例外:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/IllegalArgumentException.html" title="java.lang内のクラスまたはインタフェース" class="external-link">IllegalArgumentException</a></code> - インデックスが不正な場合。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -422,6 +470,11 @@ implements <a href="JSONIterable.html" title="io.github.takenoko4096.json.values
 <h3>untyped</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="JSONArray.html" title="io.github.takenoko4096.json.values内のクラス">JSONArray</a></span>&nbsp;<span class="element-name">untyped</span>()</div>
+<div class="block">型付き配列を型の保証のないJSONArrayに変換します。</div>
+<dl class="notes">
+<dt>戻り値:</dt>
+<dd>JSONArray。</dd>
+</dl>
 </div>
 </section>
 </li>

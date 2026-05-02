@@ -91,6 +91,7 @@ public final class JSONPath {
      * @param jsonObject 任意のオブジェクト。
      * @param function 参照を消費するコールバック関数。
      * @param isForcedAccess trueの場合、オブジェクトのキーに対する単純なアクセスに限り、キーが存在しなくてもその位置に空のオブジェクトを作成します。これにより強制的にアクセス処理の中断を回避します。
+     * @param <T> コールバックの戻り値の型。
      * @return コールバックの戻り値をそのまま返します。何も返す必要がなければnullを返すことができます。
      * @throws JSONPathUnableToAccessException オブジェクトの構造との不整合によりアクセスできなかった場合。
      */
@@ -245,6 +246,7 @@ public final class JSONPath {
         /**
          * パスの参照先に格納された値を取得します。
          * @param type 期待する型。
+         * @param <U> 期待する型。
          * @return 格納された値。
          */
         public abstract <U extends JSONValue<?>> U get(JSONValueType<U> type);

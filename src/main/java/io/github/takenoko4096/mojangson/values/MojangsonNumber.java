@@ -5,6 +5,7 @@ import org.jspecify.annotations.NullMarked;
 
 /**
  * mojangsonにおける数値を表現します。
+ * @param <T> Numberの子クラス。
  */
 @NullMarked
 public abstract class MojangsonNumber<T extends Number> extends MojangsonPrimitive<T> {

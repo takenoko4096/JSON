@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 型付きのJSONArray。このクラスにラップされる要素はすべてT型であることが確約されます。
+ * @param <T> 要素の型。
+ */
 @NullMarked
 public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> implements JSONIterable<T> {
     private final JSONValueType<T> type;
@@ -47,7 +51,13 @@ public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> i
         return value.isEmpty();
     }
 
-    public T get(int index) {
+    /**
+     * 引数に渡されたインデックスに格納された値を返します。
+     * @param index インデックス。
+     * @return インデックスに格納された値。
+     * @throws IllegalArgumentException インデックスが存在しない場合。
+     */
+    public T get(int index) throws IllegalArgumentException {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
         }
@@ -56,7 +66,13 @@ public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> i
         else return value.get(value.size() + index);
     }
 
-    public void add(int index, T value) {
+    /**
+     * 引数に渡されたインデックスに値を格納し、そのインデックス以降の値を後ろに追いやります。
+     * @param index インデックス。
+     * @param value 格納する値。
+     * @throws IllegalArgumentException インデックスが不正な場合。
+     */
+    public void add(int index, T value) throws IllegalArgumentException {
         if (index > this.value.size()) {
             throw new IllegalArgumentException("そのインデックスは使用できません");
         }
@@ -65,11 +81,21 @@ public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> i
         else this.value.add(this.value.size() + index, value);
     }
 
+    /**
+     * 配列の後ろに引数に渡された値を追加します。
+     * @param value 格納する値。
+     */
     public void add(T value) {
         this.value.add(value);
     }
 
-    public void set(int index, T value) {
+    /**
+     * 引数に渡されたインデックスの値を上書きします。
+     * @param index インデックス。
+     * @param value 格納する値。
+     * @throws IllegalArgumentException インデックスが不正な場合。
+     */
+    public void set(int index, T value) throws IllegalArgumentException {
         if (index >= this.value.size()) {
             throw new IllegalArgumentException("そのインデックスは使用できません");
         }
@@ -118,6 +144,10 @@ public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> i
         return list.iterator();
     }
 
+    /**
+     * 型付き配列を型の保証のないJSONArrayに変換します。
+     * @return JSONArray。
+     */
     public JSONArray untyped() {
         final JSONArray array = new JSONArray();
         for (int i = 0; i < length(); i++) {

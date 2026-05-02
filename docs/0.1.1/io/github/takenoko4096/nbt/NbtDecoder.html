@@ -53,25 +53,7 @@ loadScripts(document, 'script');</script>
 <div class="toc-header">コンテンツ&nbsp;<input type="text" class="filter-input" disabled placeholder="コンテンツのフィルタ(.と入力)" aria-label="目次のフィルタ" autocomplete="off" spellcheck="false"><input type="reset" class="reset-filter" disabled tabindex="-1" value="リセット"></div>
 <ol class="toc-list" tabindex="-1">
 <li><a href="#" tabindex="0">説明</a></li>
-<li><a href="#field-summary" tabindex="0">フィールドの概要</a></li>
 <li><a href="#method-summary" tabindex="0">メソッドの概要</a></li>
-<li><a href="#field-detail" tabindex="0">フィールド詳細</a>
-<ol class="toc-list">
-<li><a href="#TAG_END" tabindex="0">TAG_END</a></li>
-<li><a href="#TAG_BYTE" tabindex="0">TAG_BYTE</a></li>
-<li><a href="#TAG_SHORT" tabindex="0">TAG_SHORT</a></li>
-<li><a href="#TAG_INT" tabindex="0">TAG_INT</a></li>
-<li><a href="#TAG_LONG" tabindex="0">TAG_LONG</a></li>
-<li><a href="#TAG_FLOAT" tabindex="0">TAG_FLOAT</a></li>
-<li><a href="#TAG_DOUBLE" tabindex="0">TAG_DOUBLE</a></li>
-<li><a href="#TAG_BYTE_ARRAY" tabindex="0">TAG_BYTE_ARRAY</a></li>
-<li><a href="#TAG_STRING" tabindex="0">TAG_STRING</a></li>
-<li><a href="#TAG_LIST" tabindex="0">TAG_LIST</a></li>
-<li><a href="#TAG_COMPOUND" tabindex="0">TAG_COMPOUND</a></li>
-<li><a href="#TAG_INT_ARRAY" tabindex="0">TAG_INT_ARRAY</a></li>
-<li><a href="#TAG_LONG_ARRAY" tabindex="0">TAG_LONG_ARRAY</a></li>
-</ol>
-</li>
 <li><a href="#method-detail" tabindex="0">メソッドの詳細</a>
 <ol class="toc-list">
 <li><a href="#decompress(java.io.File)" tabindex="0">decompress(File)</a></li>
@@ -98,61 +80,11 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="annotations">@NullMarked
 </span><span class="modifiers">public final class </span><span class="element-name type-name-label">NbtDecoder</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a></span></div>
+<div class="block">nbtバイナリをデコードするクラス。</div>
 </div>
 </section>
 <section class="summary">
 <ul class="summary-list">
-<!-- =========== FIELD SUMMARY =========== -->
-<li>
-<section class="field-summary" id="field-summary">
-<h2>フィールドの概要</h2>
-<div class="caption"><span>フィールド</span></div>
-<div class="summary-table three-column-summary">
-<div class="table-header col-first">修飾子とタイプ</div>
-<div class="table-header col-second">フィールド</div>
-<div class="table-header col-last">説明</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#TAG_BYTE" class="member-name-link">TAG_BYTE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#TAG_BYTE_ARRAY" class="member-name-link">TAG_BYTE_ARRAY</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#TAG_COMPOUND" class="member-name-link">TAG_COMPOUND</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#TAG_DOUBLE" class="member-name-link">TAG_DOUBLE</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#TAG_END" class="member-name-link">TAG_END</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#TAG_FLOAT" class="member-name-link">TAG_FLOAT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#TAG_INT" class="member-name-link">TAG_INT</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#TAG_INT_ARRAY" class="member-name-link">TAG_INT_ARRAY</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#TAG_LIST" class="member-name-link">TAG_LIST</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#TAG_LONG" class="member-name-link">TAG_LONG</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#TAG_LONG_ARRAY" class="member-name-link">TAG_LONG_ARRAY</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#TAG_SHORT" class="member-name-link">TAG_SHORT</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#TAG_STRING" class="member-name-link">TAG_STRING</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-</div>
-</section>
-</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -166,22 +98,34 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">説明</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#decompress(byte%5B%5D)" class="member-name-link">decompress</a><wbr>(byte[]&nbsp;bytes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">引数に渡されたバイト列をGZip圧縮された形式であるものとしてデコードします。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#decompress(java.io.File)" class="member-name-link">decompress</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">引数に渡されたファイルをGZip圧縮された形式のバイナリファイルであるものとしてデコードします。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isCompressed(byte%5B%5D)" class="member-name-link">isCompressed</a><wbr>(byte[]&nbsp;bytes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">GZip圧縮された形式のバイト列であるかどうかを返します。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isCompressed(java.io.File)" class="member-name-link">isCompressed</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">GZip圧縮された形式のファイルであるかどうかを返します。</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#raw(byte%5B%5D)" class="member-name-link">raw</a><wbr>(byte[]&nbsp;bytes)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">引数に渡されたバイト列を圧縮されていない形式であるものとしてデコードします。</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#raw(java.io.File)" class="member-name-link">raw</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">引数に渡されたファイルを圧縮されていない形式のバイナリファイルであるものとしてデコードします。</div>
+</div>
 </div>
 </div>
 </div>
@@ -194,222 +138,6 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="details">
 <ul class="details-list">
-<!-- ============ FIELD DETAIL =========== -->
-<li>
-<section class="field-details" id="field-detail">
-<h2>フィールド詳細</h2>
-<ul class="member-list">
-<li>
-<section class="detail" id="TAG_END">
-<h3>TAG_END</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_END</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_END">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_BYTE">
-<h3>TAG_BYTE</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_BYTE</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_BYTE">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_SHORT">
-<h3>TAG_SHORT</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_SHORT</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_SHORT">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_INT">
-<h3>TAG_INT</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_INT</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_INT">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_LONG">
-<h3>TAG_LONG</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_LONG</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_LONG">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_FLOAT">
-<h3>TAG_FLOAT</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_FLOAT</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_FLOAT">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_DOUBLE">
-<h3>TAG_DOUBLE</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_DOUBLE</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_DOUBLE">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_BYTE_ARRAY">
-<h3>TAG_BYTE_ARRAY</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_BYTE_ARRAY</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_BYTE_ARRAY">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_STRING">
-<h3>TAG_STRING</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_STRING</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_STRING">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_LIST">
-<h3>TAG_LIST</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_LIST</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_LIST">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_COMPOUND">
-<h3>TAG_COMPOUND</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_COMPOUND</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_COMPOUND">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_INT_ARRAY">
-<h3>TAG_INT_ARRAY</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_INT_ARRAY</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_INT_ARRAY">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-<li>
-<section class="detail" id="TAG_LONG_ARRAY">
-<h3>TAG_LONG_ARRAY</h3>
-<div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">TAG_LONG_ARRAY</span></div>
-<dl class="notes">
-<dt>関連項目:</dt>
-<dd>
-<ul class="tag-list">
-<li><a href="../../../../constant-values.html#io.github.takenoko4096.nbt.NbtDecoder.TAG_LONG_ARRAY">定数フィールド値</a></li>
-</ul>
-</dd>
-</dl>
-</div>
-</section>
-</li>
-</ul>
-</section>
-</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
@@ -419,7 +147,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="decompress(java.io.File)">
 <h3>decompress</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">decompress</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">decompress</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</span>
+                                    throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">引数に渡されたファイルをGZip圧縮された形式のバイナリファイルであるものとしてデコードします。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>file</code> - 読み取るファイル。</dd>
+<dt>戻り値:</dt>
+<dd>デコード結果のコンパウンド。</dd>
+<dt>例外:</dt>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
+</dl>
 </div>
 </section>
 </li>
@@ -427,7 +165,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="raw(java.io.File)">
 <h3>raw</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">raw</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">raw</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</span>
+                             throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">引数に渡されたファイルを圧縮されていない形式のバイナリファイルであるものとしてデコードします。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>file</code> - 読み取るファイル。</dd>
+<dt>戻り値:</dt>
+<dd>デコード結果のコンパウンド。</dd>
+<dt>例外:</dt>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code></dd>
+</dl>
 </div>
 </section>
 </li>
@@ -435,7 +183,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isCompressed(java.io.File)">
 <h3>isCompressed</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCompressed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCompressed</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/io/File.html" title="java.io内のクラスまたはインタフェース" class="external-link">File</a>&nbsp;file)</span>
+                            throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">GZip圧縮された形式のファイルであるかどうかを返します。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>file</code> - 読み取るファイル。</dd>
+<dt>戻り値:</dt>
+<dd>GZip圧縮されているならば、真。バイト列が短すぎる場合例外を投げます。</dd>
+<dt>例外:</dt>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合、またはバイト列が短すぎて圧縮形式を判別できない場合。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -444,6 +202,13 @@ loadScripts(document, 'script');</script>
 <h3>decompress</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">decompress</span><wbr><span class="parameters">(byte[]&nbsp;bytes)</span></div>
+<div class="block">引数に渡されたバイト列をGZip圧縮された形式であるものとしてデコードします。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>bytes</code> - 解析するバイト列。</dd>
+<dt>戻り値:</dt>
+<dd>デコード結果のコンパウンド。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -452,6 +217,13 @@ loadScripts(document, 'script');</script>
 <h3>raw</h3>
 <div class="horizontal-scroll">
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../mojangson/values/MojangsonCompound.html" title="io.github.takenoko4096.mojangson.values内のクラス">MojangsonCompound</a></span>&nbsp;<span class="element-name">raw</span><wbr><span class="parameters">(byte[]&nbsp;bytes)</span></div>
+<div class="block">引数に渡されたバイト列を圧縮されていない形式であるものとしてデコードします。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>bytes</code> - 解析するバイト列。</dd>
+<dt>戻り値:</dt>
+<dd>デコード結果のコンパウンド。</dd>
+</dl>
 </div>
 </section>
 </li>
@@ -459,7 +231,17 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="isCompressed(byte[])">
 <h3>isCompressed</h3>
 <div class="horizontal-scroll">
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCompressed</span><wbr><span class="parameters">(byte[]&nbsp;bytes)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCompressed</span><wbr><span class="parameters">(byte[]&nbsp;bytes)</span>
+                            throws <span class="exceptions"><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></span></div>
+<div class="block">GZip圧縮された形式のバイト列であるかどうかを返します。</div>
+<dl class="notes">
+<dt>パラメータ:</dt>
+<dd><code>bytes</code> - 解析するバイト列。</dd>
+<dt>戻り値:</dt>
+<dd>GZip圧縮されているならば、真。バイト列が短すぎる場合例外を投げます。</dd>
+<dt>例外:</dt>
+<dd><code><a href="NbtReadException.html" title="io.github.takenoko4096.nbt内のクラス">NbtReadException</a></code> - デコードに失敗した場合、またはバイト列が短すぎて圧縮形式を判別できない場合。</dd>
+</dl>
 </div>
 </section>
 </li>

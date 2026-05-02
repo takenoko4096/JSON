@@ -93,6 +93,7 @@ public final class MojangsonPath {
      * @param mojangsonCompound 任意のコンパウンド。
      * @param function 参照を消費するコールバック関数。
      * @param isForcedAccess trueの場合、コンパウンドのキーに対する単純なアクセスに限り、キーが存在しなくてもその位置に空のコンパウンドを作成します。これにより強制的にアクセス処理の中断を回避します。
+     * @param <T> コールバックの戻り値の型。
      * @return コールバックの戻り値をそのまま返します。何も返す必要がなければnullを返すことができます。
      * @throws MojangsonPathUnableToAccessException コンパウンドの構造との不整合によりアクセスできなかった場合。
      */
@@ -247,6 +248,7 @@ public final class MojangsonPath {
         /**
          * パスの参照先に格納された値を取得します。
          * @param type 期待する型。
+         * @param <U> 期待する型。
          * @return 格納された値。
          */
         public abstract <U extends MojangsonValue<?>> U get(MojangsonValueType<U> type);

@@ -13,8 +13,14 @@ import org.jspecify.annotations.Nullable;
  */
 @NullMarked
 public abstract class JSONPathNode<S extends JSONStructure, T> {
+    /**
+     * 子アクセスのためのキーまたは添え字。
+     */
     protected final T parameter;
 
+    /**
+     * 子ノード。
+     */
     @Nullable
     protected JSONPathNode<?, ?> child;
 
@@ -39,8 +45,12 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
      */
     public abstract JSONPathNode<S, T> copy();
 
+    @Override
     public abstract String toString();
 
+    /**
+     * オブジェクトのキーに対する単純なアクセスを表現するノード。
+     */
     public static final class ObjectKeyNode extends JSONPathNode<JSONObject, String> {
         ObjectKeyNode(String name, @Nullable JSONPathNode<?, ?> child) {
             super(name, child);
@@ -62,6 +72,9 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
     }
 
+    /**
+     * 配列の添え字に対する単純なアクセスを表現するノード。
+     */
     public static final class ArrayIndexNode extends JSONPathNode<JSONArray, Integer> {
         ArrayIndexNode(Integer index, @Nullable JSONPathNode<?, ?> child) {
             super(index, child);
@@ -83,6 +96,9 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
     }
 
+    /**
+     * オブジェクトが紐づけられたキーに対する条件付きアクセスを表現するノード。
+     */
     public static final class ObjectKeyCheckerNode extends JSONPathNode<JSONObject, Pair<String, JSONObject>> {
         ObjectKeyCheckerNode(String name, JSONObject jsonObject, @Nullable JSONPathNode<?, ?> child) {
             super(new Pair<>(name, jsonObject), child);
@@ -113,6 +129,9 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
     }
 
+    /**
+     * 配列内において条件を満たす最初の要素への探索アクセスを表現するノード。
+     */
     public static final class ArrayIndexFinderNode extends JSONPathNode<JSONArray, JSONObject> {
         ArrayIndexFinderNode(JSONObject parameter, @Nullable JSONPathNode<?, ?> child) {
             super(parameter, child);

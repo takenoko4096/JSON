@@ -39,12 +39,17 @@ public class JSONFile {
 
     /**
      * java.io.Fileとして取得します。
-     * @return ラップされていたFileオブジェクト
+     * @return ラップされていたFileオブジェクト。
      */
     public File toFile() {
         return file;
     }
 
+    /**
+     * ファイルの内容を文字列として読み取り、文字列として返します。
+     * @return 空白文字・改行を含む文字列。
+     * @throws IllegalStateException ファイルが存在しない、またはI/O例外の場合。
+     */
     protected String readAsString() throws IllegalStateException {
         if (exists()) try {
             return String.join("\n", Files.readAllLines(file.toPath()));
@@ -55,6 +60,11 @@ public class JSONFile {
         else throw new IllegalStateException("ファイル '" + file + "' が存在しません");
     }
 
+    /**
+     * ファイルの内容を引数に渡された文字列で上書きします。
+     * @param json 空白文字・改行を含む文字列。
+     * @throws IllegalStateException ファイルが存在しない、またはI/O例外の場合。
+     */
     protected void writeAsString(String json) throws IllegalStateException {
         if (exists()) try {
             Files.write(

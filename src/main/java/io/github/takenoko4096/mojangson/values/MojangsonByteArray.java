@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * mojangsonにおけるbyte[]を表現します。
+ */
 @NullMarked
 public class MojangsonByteArray extends MojangsonArray<byte[], MojangsonByte> {
     public MojangsonByteArray(byte[] value) {

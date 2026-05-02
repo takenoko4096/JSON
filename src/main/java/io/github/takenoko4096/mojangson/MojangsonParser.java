@@ -576,7 +576,9 @@ public class MojangsonParser {
 
     /**
      * 引数に渡された文字列をmojangsonとしてパースします。
-     * @param text mojangson
+     * @param text mojangson。
+     * @param clazz キャスト先のクラス。
+     * @param <T> キャスト先の型。
      * @return mojangson値
      * @throws MojangsonParseException mojangsonが無効な場合。
      */
@@ -592,30 +594,71 @@ public class MojangsonParser {
         }
     }
 
+    /**
+     * 新しく関数を定義します。
+     * @param name 関数名。
+     * @param function 引数リストを受け取る関数。
+     */
     public void register(String name, MojangsonFunctionalOperator function) {
         FUNCTIONS.put(name, function);
     }
 
+    /**
+     * 引数に渡された文字列を任意の値としてパースします。
+     * @param text mojangson。
+     * @return mojangsonオブジェクト表現。
+     * @throws MojangsonParseException mojangsonが無効な場合。
+     */
     public static MojangsonValue<?> object(String text) throws MojangsonParseException {
         return new MojangsonParser().parse(text, MojangsonValue.class);
     }
 
+    /**
+     * 引数に渡された文字列をコンパウンドとしてパースします。
+     * @param text mojangson。
+     * @return コンパウンドのmojangsonオブジェクト表現。
+     * @throws MojangsonParseException mojangsonが無効な場合。
+     */
     public static MojangsonCompound compound(String text) throws MojangsonParseException {
         return new MojangsonParser().parse(text, MojangsonCompound.class);
     }
 
+    /**
+     * 引数に渡された文字列をリストとしてパースします。
+     * @param text mojangson。
+     * @return リストのmojangsonオブジェクト表現。
+     * @throws MojangsonParseException mojangsonが無効な場合。
+     */
     public static MojangsonList list(String text) throws MojangsonParseException {
         return new MojangsonParser().parse(text, MojangsonList.class);
     }
 
+    /**
+     * 引数に渡された文字列をバイト配列としてパースします。
+     * @param text mojangson。
+     * @return バイト配列のmojangsonオブジェクト表現。
+     * @throws MojangsonParseException mojangsonが無効な場合。
+     */
     public static MojangsonByteArray byteArray(String text) throws MojangsonParseException {
         return new MojangsonParser().parse(text, MojangsonByteArray.class);
     }
 
+    /**
+     * 引数に渡された文字列を32ビット整数配列としてパースします。
+     * @param text mojangson。
+     * @return 32ビット整数配列のmojangsonオブジェクト表現。
+     * @throws MojangsonParseException mojangsonが無効な場合。
+     */
     public static MojangsonIntArray intArray(String text) throws MojangsonParseException {
         return new MojangsonParser().parse(text, MojangsonIntArray.class);
     }
 
+    /**
+     * 引数に渡された文字列を64ビット整数配列としてパースします。
+     * @param text mojangson。
+     * @return 64ビット整数配列のmojangsonオブジェクト表現。
+     * @throws MojangsonParseException mojangsonが無効な場合。
+     */
     public static MojangsonLongArray longArray(String text) throws MojangsonParseException {
         return new MojangsonParser().parse(text, MojangsonLongArray.class);
     }
