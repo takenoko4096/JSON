@@ -1,7 +1,6 @@
 package io.github.takenoko4096.mojangson;
 
 import io.github.takenoko4096.mojangson.values.*;
-import io.github.takenoko4096.mojangson.values.*;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
@@ -10,22 +9,22 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * mojangson構造を文字列にシリアライズするクラス。
+ */
 @NullMarked
 public class MojangsonSerializer {
     private final int indentationSpaceCount;
 
-    private final boolean asJsonString;
+    private final boolean asJson;
 
-    private final MojangsonStructure value;
-
-    private MojangsonSerializer(MojangsonStructure value, int indentationSpaceCount, boolean asJsonString) {
-        this.value = value;
+    private MojangsonSerializer(int indentationSpaceCount, boolean asJson) {
         this.indentationSpaceCount = indentationSpaceCount;
-        this.asJsonString = asJsonString;
+        this.asJson = asJson;
     }
 
-    private StringBuilder serialize() throws MojangsonSerializationException {
-        return serialize(this.value, 1);
+    public String serialize(MojangsonStructure structure) throws MojangsonSerializationException {
+        return serialize(structure, 1).toString();
     }
 
     private StringBuilder serialize(@Nullable Object value, int indentation) throws MojangsonSerializationException {
@@ -82,7 +81,7 @@ public class MojangsonSerializer {
     private StringBuilder iterable(MojangsonIterable<?> iterable, int indentation) {
         StringBuilder stringBuilder = new StringBuilder().append(ARRAY_LIST_BRACES[0]);
 
-        if (!asJsonString && ITERABLE_TYPE_SYMBOLS.containsKey(iterable.getClass())) {
+        if (!asJson && ITERABLE_TYPE_SYMBOLS.containsKey(iterable.getClass())) {
             stringBuilder
                 .append(ITERABLE_TYPE_SYMBOLS.get(iterable.getClass()))
                 .append(SEMICOLON);
@@ -117,7 +116,7 @@ public class MojangsonSerializer {
     }
 
     private StringBuilder string(String value) {
-        boolean requireQuote = asJsonString || SYMBOLS_ON_STRING.stream().anyMatch(sym -> value.contains(sym.toString())) || KEYWORDS.contains(value);
+        boolean requireQuote = asJson || SYMBOLS_ON_STRING.stream().anyMatch(sym -> value.contains(sym.toString())) || KEYWORDS.contains(value);
         final StringBuilder stringBuilder = new StringBuilder();
 
         if (requireQuote) stringBuilder.append(QUOTE);
@@ -135,7 +134,7 @@ public class MojangsonSerializer {
     private StringBuilder number(Number value) {
         final StringBuilder stringBuilder = new StringBuilder(String.valueOf(value));
 
-        if (!asJsonString && NUMBER_TYPE_SYMBOLS.containsKey(value.getClass())) {
+        if (!asJson && NUMBER_TYPE_SYMBOLS.containsKey(value.getClass())) {
             stringBuilder.append(NUMBER_TYPE_SYMBOLS.get(value.getClass()));
         }
 
@@ -212,11 +211,22 @@ public class MojangsonSerializer {
         Double.class, 'd'
     ));
 
-    public static String serialize(MojangsonStructure structure) {
-        return new MojangsonSerializer(structure, 4, false).serialize().toString();
+    /**
+     * mojangson構造を文字列としてシリアライズします。
+     * @param structure mojangson構造体
+     * @param asJson trueの場合、json形式でシリアライズされます。
+     * @return 改行・空白文字によるインデントを含む文字列。
+     */
+    public static String structure(MojangsonStructure structure, boolean asJson) throws MojangsonSerializationException {
+        return new MojangsonSerializer(4, asJson).serialize(structure);
     }
 
-    public static String toJson(MojangsonStructure structure) {
-        return new MojangsonSerializer(structure, 4, true).serialize().toString();
+    /**
+     * mojangson構造を文字列としてシリアライズします。
+     * @param structure mojangson構造体
+     * @return 改行・空白文字によるインデントを含む文字列。
+     */
+    public static String structure(MojangsonStructure structure) throws MojangsonSerializationException {
+        return structure(structure, true);
     }
 }

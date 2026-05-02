@@ -20,7 +20,7 @@ public final class JSONPath {
         this.root = root;
     }
 
-    private <U> @Nullable U checkedAccess(JSONPathNode<?, ?> node, @Nullable JSONStructure structure, JSONPathReferer<JSONStructure, Object, U> function) throws JSONPathUnableToAccessException {
+    private <U> @Nullable U checkedAccess(JSONPathNode<?, ?> node, @Nullable JSONStructure structure, JSONLocationAccessProvider<JSONStructure, U> function) throws JSONPathUnableToAccessException {
         switch (node) {
             case JSONPathNode.ObjectKeyNode objectKeyNode -> {
                 if (!(structure instanceof JSONObject object)) {
@@ -50,7 +50,7 @@ public final class JSONPath {
         }
     }
 
-    private <U> @Nullable U onTermination(JSONObject jsonObject, JSONPathReferer<JSONStructure, Object, @Nullable U> function, boolean isForcedAccess) throws JSONPathUnableToAccessException {
+    private <U> @Nullable U onTermination(JSONObject jsonObject, JSONLocationAccessProvider<JSONStructure, @Nullable U> function, boolean isForcedAccess) throws JSONPathUnableToAccessException {
         JSONPathNode<?, ?> node = root;
         JSONStructure currentStruct = jsonObject;
 
@@ -86,6 +86,14 @@ public final class JSONPath {
         return checkedAccess(node, currentStruct, function);
     }
 
+    /**
+     * 任意のオブジェクト上の、このパスに対応する位置へのアクセスを提供します。
+     * @param jsonObject 任意のオブジェクト。
+     * @param function 参照を消費するコールバック関数。
+     * @param isForcedAccess trueの場合、オブジェクトのキーに対する単純なアクセスに限り、キーが存在しなくてもその位置に空のオブジェクトを作成します。これにより強制的にアクセス処理の中断を回避します。
+     * @return コールバックの戻り値をそのまま返します。何も返す必要がなければnullを返すことができます。
+     * @throws JSONPathUnableToAccessException オブジェクトの構造との不整合によりアクセスできなかった場合。
+     */
     public <T> @Nullable T access(JSONObject jsonObject, Function<JSONPathReference<?, ?>, @Nullable T> function, boolean isForcedAccess) throws JSONPathUnableToAccessException {
         return onTermination(jsonObject, (lastStructure, nodeParameter) -> {
             final JSONPathReference<?, ?> reference = switch (lastStructure) {
@@ -315,5 +323,4 @@ public final class JSONPath {
             }
         }
     }
-
 }

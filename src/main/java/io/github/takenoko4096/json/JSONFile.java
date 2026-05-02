@@ -37,7 +37,11 @@ public class JSONFile {
         this(Path.of(path));
     }
 
-    public File getFile() {
+    /**
+     * java.io.Fileとして取得します。
+     * @return ラップされていたFileオブジェクト
+     */
+    public File toFile() {
         return file;
     }
 
@@ -107,7 +111,7 @@ public class JSONFile {
      * @return ファイルサイズ (bytes)。
      * @throws IllegalStateException ファイルが存在しない、またはI/O例外の場合。
      */
-    public long getSize() throws IllegalStateException {
+    public long size() throws IllegalStateException {
         if (exists()) try {
             return Files.size(file.toPath());
         }
@@ -134,7 +138,7 @@ public class JSONFile {
      * @throws IllegalStateException ファイルの書き込みに失敗した場合。
      */
     public void write(JSONStructure structure) throws JSONSerializationException, IllegalStateException {
-        writeAsString(JSONSerializer.serialize(structure));
+        writeAsString(JSONSerializer.structure(structure));
     }
 
     /**

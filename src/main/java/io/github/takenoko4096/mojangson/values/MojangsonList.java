@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * mojangsonにおけるListを表現します。
+ */
 @NullMarked
 public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> implements MojangsonIterable<MojangsonValue<?>> {
     public MojangsonList(List<MojangsonValue<?>> value) {
@@ -35,7 +38,13 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return value.isEmpty();
     }
 
-    public MojangsonValueType<?> getTypeAt(int index) {
+    /**
+     * 引数に渡されたインデックスに格納された値の型を返します。
+     * @param index インデックス。
+     * @return インデックスに格納された値の型。
+     * @throws IllegalArgumentException インデックスが存在しない場合。
+     */
+    public MojangsonValueType<?> getTypeAt(int index) throws IllegalArgumentException {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
         }
@@ -44,7 +53,15 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         else return MojangsonValueType.get(value.get(value.size() + index));
     }
 
-    public <T extends MojangsonValue<?>> T get(int index, MojangsonValueType<T> type) {
+    /**
+     * 引数に渡されたインデックスに格納された値を返します。
+     * @param index インデックス。
+     * @param type 期待する型。
+     * @return インデックスに格納された値。
+     * @param <T> 期待する型。
+     * @throws IllegalArgumentException インデックスが存在しない、または予期しない型の場合。
+     */
+    public <T extends MojangsonValue<?>> T get(int index, MojangsonValueType<T> type) throws IllegalArgumentException {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
         }
@@ -57,7 +74,13 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         else return type.toMojangson(value.get(value.size() + index));
     }
 
-    public void add(int index, Object value) {
+    /**
+     * 引数に渡されたインデックスに値を格納し、そのインデックス以降の値を後ろに追いやります。
+     * @param index インデックス。
+     * @param value 格納する値。
+     * @throws IllegalArgumentException インデックスが不正な場合。
+     */
+    public void add(int index, Object value) throws IllegalArgumentException {
         if (index > this.value.size()) {
             throw new IllegalArgumentException("そのインデックスは使用できません");
         }
@@ -66,11 +89,21 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         else this.value.add(this.value.size() + index, MojangsonValueType.get(value).toMojangson(value));
     }
 
+    /**
+     * リストの後ろに引数に渡された値を追加します。
+     * @param value 格納する値。
+     */
     public void add(Object value) {
         this.value.add(MojangsonValueType.get(value).toMojangson(value));
     }
 
-    public void set(int index, Object value) {
+    /**
+     * 引数に渡されたインデックスの値を上書きします。
+     * @param index インデックス。
+     * @param value 格納する値。
+     * @throws IllegalArgumentException インデックスが不正な場合。
+     */
+    public void set(int index, Object value) throws IllegalArgumentException {
         if (index >= this.value.size()) {
             throw new IllegalArgumentException("そのインデックスは使用できません");
         }
@@ -79,6 +112,11 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         else this.value.set(this.value.size() + index, MojangsonValueType.get(value).toMojangson(value));
     }
 
+    /**
+     * 構造体の指定の添え字番目のオブジェクトを消去します。
+     * @param index 添え字。
+     * @return 削除に成功した場合、真。
+     */
     public boolean delete(int index) {
         if (has(index)) {
             if (index >= 0) value.remove(index);
@@ -113,6 +151,10 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return list.iterator();
     }
 
+    /**
+     * このリストを再帰的にListに変換します。
+     * @return List形式のディープコピー。
+     */
     public List<Object> toList() {
         final List<Object> arrayList = new ArrayList<>();
 
@@ -146,6 +188,11 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return MojangsonValueTypes.LIST.toMojangson(toList());
     }
 
+    /**
+     * 引数に渡された構造体がこの構造体の部分構造であるかを返します。
+     * @param other 構造体。
+     * @return 部分構造であれば、真。
+     */
     public boolean isSuperOf(MojangsonList other) {
         if (other.length() == 0) return true;
         for (final MojangsonValue<?> conditionValue : other) {
@@ -167,6 +214,11 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return false;
     }
 
+    /**
+     * このリストが引数に渡された型のみを要素に持つリストであるかを返します。
+     * @param type 任意の型。
+     * @return このリストがその型のリストであれば、真。
+     */
     public boolean isListOf(MojangsonValueType<?> type) {
         for (int i = 0; i < length(); i++) {
             if (!getTypeAt(i).equals(type)) {
@@ -177,6 +229,12 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
         return true;
     }
 
+    /**
+     * このリストが引数に渡された型のみを要素に持つリストであれば、その型の型付きリストに変換して返します。
+     * @param type 任意の型。
+     * @return 型付きリスト。
+     * @param <T> 任意の型。
+     */
     public <T extends MojangsonValue<?>> TypedMojangsonList<T> typed(MojangsonValueType<T> type) {
         final TypedMojangsonList<T> array = new TypedMojangsonList<>(type);
 

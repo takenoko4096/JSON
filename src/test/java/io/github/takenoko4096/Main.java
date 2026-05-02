@@ -41,5 +41,9 @@ void main() {
         """
     );
 
+    JSONParser.array("[0, 1, 2, 3, 4, 5]")
+        .typed(JSONValueTypes.NUMBER)
+        .forEach(System.out::println);
+
     System.out.println(s2.get(MojangsonPath.of("key.array[{\"foo\":[\"baz\"]}].foo[0]"), MojangsonValueTypes.STRING));
 }

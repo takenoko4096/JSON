@@ -7,15 +7,28 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * mojangsonにおける型を表現します。
+ * @param <T> Javaにおける値。String、Number, Mapなど。
+ */
 @NullMarked
 public abstract class MojangsonValueType<T extends MojangsonValue<?>> {
+    /**
+     * クラスオブジェクト。
+     */
     protected final Class<T> clazz;
 
     protected MojangsonValueType(Class<T> clazz) {
         this.clazz = clazz;
     }
 
-    public abstract T toMojangson(@Nullable Object value);
+    /**
+     * 特定の型に対応するオブジェクトのみをmojangson値に変換し、それ以外は例外を投げます。
+     * @param value nullを含む任意のオブジェクト。
+     * @return 引数をmojangson構造に変換したオブジェクト。MojangsonValueが渡された場合、引数をそのまま返します。
+     * @throws IllegalArgumentException 不適切な型の場合。
+     */
+    public abstract T toMojangson(@Nullable Object value) throws IllegalArgumentException;
 
     @Override
     public boolean equals(Object object) {
@@ -35,6 +48,11 @@ public abstract class MojangsonValueType<T extends MojangsonValue<?>> {
         return clazz.getSimpleName();
     }
 
+    /**
+     * 引数に渡されたオブジェクトに対応する型オブジェクトを返します。
+     * @param value nullを含む任意のオブジェクト。
+     * @return 引数に渡されたオブジェクトの型によるmojangson型。
+     */
     public static MojangsonValueType<?> get(@Nullable Object value) {
         return switch (value) {
             case Boolean ignored -> MojangsonValueTypes.BYTE;

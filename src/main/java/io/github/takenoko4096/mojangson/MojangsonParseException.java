@@ -2,6 +2,11 @@ package io.github.takenoko4096.mojangson;
 
 import org.jspecify.annotations.NullMarked;
 
+/**
+ * MojangsonParserまたはMojangsonPathParserによって投げられるパース例外。
+ * @see MojangsonParser
+ * @see MojangsonPathParser
+ */
 @NullMarked
 public class MojangsonParseException extends RuntimeException {
     protected MojangsonParseException(String message, String json, int location) {

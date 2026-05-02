@@ -14,15 +14,12 @@ import org.jspecify.annotations.Nullable;
 public final class JSONSerializer {
     private final int indentationSpaceCount;
 
-    private final JSONStructure value;
-
-    private JSONSerializer(JSONStructure value, int indentationSpaceCount) {
-        this.value = value;
+    public JSONSerializer(int indentationSpaceCount) {
         this.indentationSpaceCount = indentationSpaceCount;
     }
 
-    private StringBuilder serialize() throws JSONSerializationException {
-        return serialize(this.value, 1);
+    public String serialize(JSONStructure value) {
+        return serialize(value, 1).toString();
     }
 
     private StringBuilder serialize(@Nullable Object value, int indentation) throws JSONSerializationException {
@@ -157,7 +154,7 @@ public final class JSONSerializer {
      * @param structure json構造体
      * @return 改行・空白文字によるインデントを含む文字列。
      */
-    public static String serialize(JSONStructure structure) {
-        return new JSONSerializer(structure, 4).serialize().toString();
+    public static String structure(JSONStructure structure) throws JSONSerializationException {
+        return new JSONSerializer(4).serialize(structure);
     }
 }

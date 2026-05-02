@@ -11,6 +11,9 @@ import java.util.Objects;
  */
 @NullMarked
 public abstract class MojangsonValue<T> {
+    /**
+     * ラップされた値。必要に応じてサブクラスで編集される可能性があります。
+     */
     protected final T value;
 
     protected MojangsonValue(T value) {
@@ -30,6 +33,10 @@ public abstract class MojangsonValue<T> {
         return Objects.hash(value);
     }
 
+    /**
+     * 値の型を取得します。
+     * @return この値の型を表現するオブジェクト。
+     */
     public abstract MojangsonValueType<?> getType();
 
     @Override

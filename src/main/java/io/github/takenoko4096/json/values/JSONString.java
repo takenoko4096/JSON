@@ -4,6 +4,9 @@ import io.github.takenoko4096.json.JSONValueType;
 import io.github.takenoko4096.json.JSONValueTypes;
 import org.jspecify.annotations.NullMarked;
 
+/**
+ * jsonにおけるstringを表現します。
+ */
 @NullMarked
 public final class JSONString extends JSONPrimitive<String> {
     private JSONString(String value) {
@@ -15,6 +18,11 @@ public final class JSONString extends JSONPrimitive<String> {
         return JSONValueTypes.STRING;
     }
 
+    /**
+     * StringをJSONStringに変換します。
+     * @param value String。
+     * @return JSONString。
+     */
     public static JSONString valueOf(String value) {
         return new JSONString(value);
     }

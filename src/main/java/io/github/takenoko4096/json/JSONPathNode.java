@@ -23,8 +23,20 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         this.child = child;
     }
 
-    public abstract <U> @Nullable U access(S structure, JSONPathReferer<S, Object, U> function) throws JSONPathUnableToAccessException;
+    /**
+     * 第一引数に渡された構造体そのまま、及びこのノードに対応する位置にアクセスするためのキーとなる値の2つを引数に取るラムダを受け取ります。各サブクラスにてチェックや検索等その他の処理が事前に行われることがあります。
+     * @param structure 任意の構造体。
+     * @param function コールバック。
+     * @return コールバックの戻り値そのまま。
+     * @throws JSONPathUnableToAccessException 構造との不整合によりアクセスできなかった場合。
+     * @param <U> コールバックの戻り値の型
+     */
+    public abstract <U> @Nullable U access(S structure, JSONLocationAccessProvider<S, U> function) throws JSONPathUnableToAccessException;
 
+    /**
+     * ノードのコピーを作成します。
+     * @return ノードのディープコピー。
+     */
     public abstract JSONPathNode<S, T> copy();
 
     public abstract String toString();
@@ -35,7 +47,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public <U> @Nullable U access(JSONObject structure, JSONPathReferer<JSONObject, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
+        public <U> @Nullable U access(JSONObject structure, JSONLocationAccessProvider<JSONObject, @Nullable U> function) throws JSONPathUnableToAccessException {
             return function.use(structure, parameter);
         }
 
@@ -56,7 +68,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public <U> @Nullable U access(JSONArray structure, JSONPathReferer<JSONArray, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
+        public <U> @Nullable U access(JSONArray structure, JSONLocationAccessProvider<JSONArray, @Nullable U> function) throws JSONPathUnableToAccessException {
             return function.use(structure, parameter);
         }
 
@@ -77,7 +89,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public <U> @Nullable U access(JSONObject structure, JSONPathReferer<JSONObject, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
+        public <U> @Nullable U access(JSONObject structure, JSONLocationAccessProvider<JSONObject, @Nullable U> function) throws JSONPathUnableToAccessException {
             if (!structure.has(parameter.a())) return null;
             else {
                 final JSONObject value = structure.get(parameter.a(), JSONValueTypes.OBJECT);
@@ -107,7 +119,7 @@ public abstract class JSONPathNode<S extends JSONStructure, T> {
         }
 
         @Override
-        public <U> @Nullable U access(JSONArray structure, JSONPathReferer<JSONArray, Object, @Nullable U> function) throws JSONPathUnableToAccessException {
+        public <U> @Nullable U access(JSONArray structure, JSONLocationAccessProvider<JSONArray, @Nullable U> function) throws JSONPathUnableToAccessException {
             for (int i = 0; i < structure.length(); i++) {
                 if (structure.getTypeAt(i) != JSONValueTypes.OBJECT) {
                     continue;

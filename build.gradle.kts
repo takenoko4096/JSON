@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.github.takenoko4096"
-version = "0.1.0"
+version = "0.1.1"
 description = "library of mojangson"
 
 repositories {
@@ -31,6 +31,9 @@ tasks {
     javadoc {
         title = "${project.name} ${project.version}"
         destinationDir = file("$projectDir/docs/${project.version}")
+        options {
+            encoding = Charsets.UTF_8.name()
+        }
     }
 }
 

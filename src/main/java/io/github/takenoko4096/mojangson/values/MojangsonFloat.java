@@ -4,6 +4,9 @@ import io.github.takenoko4096.mojangson.MojangsonValueType;
 import io.github.takenoko4096.mojangson.MojangsonValueTypes;
 import org.jspecify.annotations.NullMarked;
 
+/**
+ * mojangsonにおけるfloatを表現します。
+ */
 @NullMarked
 public final class MojangsonFloat extends MojangsonNumber<Float> {
     private MojangsonFloat(float value) {
@@ -15,6 +18,11 @@ public final class MojangsonFloat extends MojangsonNumber<Float> {
         return MojangsonValueTypes.FLOAT;
     }
 
+    /**
+     * floatをMojangsonFloatに変換します。
+     * @param value float。
+     * @return MojangsonFloat。
+     */
     public static MojangsonFloat valueOf(float value) {
         return new MojangsonFloat(value);
     }

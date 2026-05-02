@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * jsonにおける配列を表現します。
+ */
 @NullMarked
 public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JSONIterable<JSONValue<?>> {
     public JSONArray() {
@@ -38,6 +41,12 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         return value.isEmpty();
     }
 
+    /**
+     * 引数に渡されたインデックスに格納された値の型を返します。
+     * @param index インデックス。
+     * @return インデックスに格納された値の型。
+     * @throws IllegalArgumentException インデックスが存在しない場合。
+     */
     public JSONValueType<?> getTypeAt(int index) throws IllegalArgumentException {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
@@ -47,6 +56,14 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         else return JSONValueType.get(value.get(value.size() + index));
     }
 
+    /**
+     * 引数に渡されたインデックスに格納された値を返します。
+     * @param index インデックス。
+     * @param type 期待する型。
+     * @return インデックスに格納された値。
+     * @param <T> 期待する型。
+     * @throws IllegalArgumentException インデックスが存在しない、または予期しない型の場合。
+     */
     public <T extends JSONValue<?>> T get(int index, JSONValueType<T> type) throws IllegalArgumentException {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
@@ -60,22 +77,38 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         else return type.toJSON(value.get(value.size() + index));
     }
 
+    /**
+     * 引数に渡されたインデックスに値を格納し、そのインデックス以降の値を後ろに追いやります。
+     * @param index インデックス。
+     * @param value 格納する値。
+     * @throws IllegalArgumentException インデックスが不正な場合。
+     */
     public void add(int index, @Nullable Object value) throws IllegalArgumentException {
         if (index > this.value.size()) {
-            throw new IllegalArgumentException("そのインデックスは使用できません");
+            throw new IllegalArgumentException("インデックス " + index + " はサイズを超えるため使用できません");
         }
 
         if (index >= 0) this.value.add(index, JSONValueType.get(value).toJSON(value));
         else this.value.add(this.value.size() + index, JSONValueType.get(value).toJSON(value));
     }
 
+    /**
+     * 配列の後ろに引数に渡された値を追加します。
+     * @param value 格納する値。
+     */
     public void add(@Nullable Object value) {
         this.value.add(JSONValueType.get(value).toJSON(value));
     }
 
+    /**
+     * 引数に渡されたインデックスの値を上書きします。
+     * @param index インデックス。
+     * @param value 格納する値。
+     * @throws IllegalArgumentException インデックスが不正な場合。
+     */
     public void set(int index, @Nullable Object value) throws IllegalArgumentException {
         if (index >= this.value.size()) {
-            throw new IllegalArgumentException("そのインデックスは使用できません");
+            throw new IllegalArgumentException("インデックス " + index + " はサイズを超えるため使用できません");
         }
 
         if (index >= 0) this.value.set(index, JSONValueType.get(value).toJSON(value));
@@ -117,6 +150,10 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         return list.iterator();
     }
 
+    /**
+     * この配列を再帰的にListに変換します。
+     * @return List形式のディープコピー。
+     */
     public List<@Nullable Object> asList() {
         final List<Object> list = new ArrayList<>();
 
@@ -147,6 +184,11 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         return JSONValueTypes.ARRAY.toJSON(asList());
     }
 
+    /**
+     * 引数に渡された構造体がこの構造体の部分構造であるかを返します。
+     * @param other 構造体。
+     * @return 部分構造であれば、真。
+     */
     public boolean isSuperOf(JSONArray other) {
         if (other.length() == 0) return true;
 
@@ -169,6 +211,11 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         return false;
     }
 
+    /**
+     * この配列が引数に渡された型のみを要素に持つ配列であるかを返します。
+     * @param type 任意の型。
+     * @return この配列がその型の配列であれば、真。
+     */
     public boolean isArrayOf(JSONValueType<?> type) {
         for (int i = 0; i < length(); i++) {
             if (!getTypeAt(i).equals(type)) {
@@ -179,6 +226,12 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         return true;
     }
 
+    /**
+     * この配列が引数に渡された型のみを要素に持つ配列であれば、その型の型付き配列に変換して返します。
+     * @param type 任意の型。
+     * @return 型付き配列。
+     * @param <T> 任意の型。
+     */
     public <T extends JSONValue<?>> TypedJSONArray<T> typed(JSONValueType<T> type) {
         final TypedJSONArray<T> array = new TypedJSONArray<>(type);
 
@@ -194,6 +247,11 @@ public final class JSONArray extends JSONValue<List<JSONValue<?>>> implements JS
         return array;
     }
 
+    /**
+     * IterableをJSONArrayに変換します。
+     * @param iterable Iterable。
+     * @return JSONArray。
+     */
     public static JSONArray valueOf(Iterable<?> iterable) {
         final List<JSONValue<?>> list = new ArrayList<>();
 

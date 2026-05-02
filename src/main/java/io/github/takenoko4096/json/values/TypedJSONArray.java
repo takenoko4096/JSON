@@ -13,14 +13,21 @@ import java.util.List;
 public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> implements JSONIterable<T> {
     private final JSONValueType<T> type;
 
-    public TypedJSONArray(JSONValueType<T> type) {
-        super(new ArrayList<>());
-        this.type = type;
-    }
-
     public TypedJSONArray(JSONValueType<T> type, List<T> list) {
         super(new ArrayList<>(list));
         this.type = type;
+
+        for (int i = 0; i < length(); i++) {
+            final T element = value.get(i);
+
+            if (!JSONValueType.get(element).equals(type)) {
+                throw new IllegalArgumentException("TypedJSONArrayのインスタンス化に失敗しました: インデックス " + i + " は　" + type + " 型ではありません: " + JSONValueType.get(element) + " 型の " + element + " です");
+            }
+        }
+    }
+
+    public TypedJSONArray(JSONValueType<T> type) {
+        this(type, List.of());
     }
 
     @Override
@@ -40,22 +47,9 @@ public class TypedJSONArray<T extends JSONValue<?>> extends JSONValue<List<T>> i
         return value.isEmpty();
     }
 
-    protected boolean checkTypeAt(int index) {
-        if (!has(index)) {
-            throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
-        }
-
-        if (index >= 0) return JSONValueType.get(value.get(index)).equals(type);
-        else return JSONValueType.get(value.get(value.size() + index)).equals(type);
-    }
-
     public T get(int index) {
         if (!has(index)) {
             throw new IllegalArgumentException("インデックス '" + index + "' は存在しません");
-        }
-
-        if (!checkTypeAt(index)) {
-            throw new IllegalArgumentException("インデックス '" + index + "' は期待される型の値と紐づけられていません");
         }
 
         if (index >= 0) return value.get(index);

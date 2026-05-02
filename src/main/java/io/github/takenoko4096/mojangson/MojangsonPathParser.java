@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * mojangsonパスをパースするクラス。
+ */
 @NullMarked
 public class MojangsonPathParser {
     private static final Set<Character> WHITESPACE = Set.of(' ');
@@ -314,6 +317,12 @@ public class MojangsonPathParser {
         return new MojangsonPath(rootNode);
     }
 
+    /**
+     * 渡された文字列をmojangsonパスとしてパースします。
+     * @param path mojangsonパス
+     * @return jsonパスオブジェクト
+     * @throws MojangsonParseException jsonパスが無効な場合。
+     */
     public MojangsonPath parse(String path) throws MojangsonParseException {
         this.text = path;
         return parse();

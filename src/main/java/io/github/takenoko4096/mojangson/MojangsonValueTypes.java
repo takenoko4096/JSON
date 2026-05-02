@@ -7,10 +7,18 @@ import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 
+/**
+ * すべての型オブジェクトがこのクラスの静的フィールドで定義されています。
+ * @see MojangsonValueType
+ */
 @NullMarked
 public final class MojangsonValueTypes {
     private MojangsonValueTypes() {}
 
+    /**
+     * byteに対応。
+     * @see MojangsonByte
+     */
     public static final MojangsonValueType<MojangsonByte> BYTE = new MojangsonValueType<>(MojangsonByte.class) {
         @Override
         public MojangsonByte toMojangson(@Nullable Object value) {
@@ -23,6 +31,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * shortに対応。
+     * @see MojangsonShort
+     */
     public static final MojangsonValueType<MojangsonShort> SHORT = new MojangsonValueType<>(MojangsonShort.class) {
         @Override
         public MojangsonShort toMojangson(@Nullable Object value) {
@@ -32,6 +44,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * intに対応。
+     * @see MojangsonInt
+     */
     public static final MojangsonValueType<MojangsonInt> INT = new MojangsonValueType<>(MojangsonInt.class) {
         @Override
         public MojangsonInt toMojangson(@Nullable Object value) {
@@ -41,6 +57,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * longに対応。
+     * @see MojangsonLong
+     */
     public static final MojangsonValueType<MojangsonLong> LONG = new MojangsonValueType<>(MojangsonLong.class) {
         @Override
         public MojangsonLong toMojangson(@Nullable Object value) {
@@ -50,6 +70,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * floatに対応。
+     * @see MojangsonFloat
+     */
     public static final MojangsonValueType<MojangsonFloat> FLOAT = new MojangsonValueType<>(MojangsonFloat.class) {
         @Override
         public MojangsonFloat toMojangson(@Nullable Object value) {
@@ -59,6 +83,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * doubleに対応。
+     * @see MojangsonDouble
+     */
     public static final MojangsonValueType<MojangsonDouble> DOUBLE = new MojangsonValueType<>(MojangsonDouble.class) {
         @Override
         public MojangsonDouble toMojangson(@Nullable Object value) {
@@ -68,6 +96,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * java.lang.Stringに対応。
+     * @see MojangsonString
+     */
     public static final MojangsonValueType<MojangsonString> STRING = new MojangsonValueType<>(MojangsonString.class) {
         @Override
         public MojangsonString toMojangson(@Nullable Object value) {
@@ -81,6 +113,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * byte[]に対応。
+     * @see MojangsonByteArray
+     */
     public static final MojangsonValueType<MojangsonByteArray> BYTE_ARRAY = new MojangsonValueType<>(MojangsonByteArray.class) {
         @Override
         public MojangsonByteArray toMojangson(@Nullable Object value) {
@@ -90,6 +126,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * int[]に対応。
+     * @see MojangsonIntArray
+     */
     public static final MojangsonValueType<MojangsonIntArray> INT_ARRAY = new MojangsonValueType<>(MojangsonIntArray.class) {
         @Override
         public MojangsonIntArray toMojangson(@Nullable Object value) {
@@ -99,6 +139,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * long[]に対応。
+     * @see MojangsonLongArray
+     */
     public static final MojangsonValueType<MojangsonLongArray> LONG_ARRAY = new MojangsonValueType<>(MojangsonLongArray.class) {
         @Override
         public MojangsonLongArray toMojangson(@Nullable Object value) {
@@ -108,6 +152,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * java.util.Mapに対応。
+     * @see MojangsonCompound
+     */
     public static final MojangsonValueType<MojangsonCompound> COMPOUND = new MojangsonValueType<>(MojangsonCompound.class) {
         @Override
         public MojangsonCompound toMojangson(@Nullable Object value) {
@@ -131,6 +179,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * java.util.Listに対応。
+     * @see MojangsonList
+     */
     public static final MojangsonValueType<MojangsonList> LIST = new MojangsonValueType<>(MojangsonList.class) {
         @Override
         public MojangsonList toMojangson(@Nullable Object value) {
@@ -156,6 +208,10 @@ public final class MojangsonValueTypes {
         }
     };
 
+    /**
+     * nullに対応。
+     * @see MojangsonNull
+     */
     public static final MojangsonValueType<MojangsonNull> NULL = new MojangsonValueType<>(MojangsonNull.class) {
         @Override
         public MojangsonNull toMojangson(@Nullable Object value) {

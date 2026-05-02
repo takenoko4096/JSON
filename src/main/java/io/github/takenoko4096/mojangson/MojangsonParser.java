@@ -1,13 +1,15 @@
 package io.github.takenoko4096.mojangson;
 
 import io.github.takenoko4096.mojangson.values.*;
-import io.github.takenoko4096.mojangson.values.*;
 import org.jspecify.annotations.NullMarked;
 import org.jspecify.annotations.Nullable;
 
 import java.util.*;
 import java.util.function.Function;
 
+/**
+ * mojangson文字列を解釈してmojangson構造に変換するクラス。
+ */
 @NullMarked
 public class MojangsonParser {
     private static final Set<Character> WHITESPACE = Set.of(' ', '\n', '\t');
@@ -39,6 +41,8 @@ public class MojangsonParser {
     private static final char[] SIGNED_AND_UNSIGNED = {'s', 'u'};
 
     private static final char POWER = 'e';
+
+    private static final String NULL = "null";
 
     private static final Function<String, ? extends Number> DEFAULT_SIGNED_INT_PARSER = Integer::parseInt;
 
@@ -188,8 +192,15 @@ public class MojangsonParser {
 
     private int location = 0;
 
-    public MojangsonParser() {
+    private final boolean useNull;
+
+    public MojangsonParser(boolean useNull) {
         this.text = "";
+        this.useNull = useNull;
+    }
+
+    public MojangsonParser() {
+        this(false);
     }
 
     private boolean isOver() {
@@ -421,7 +432,7 @@ public class MojangsonParser {
             throw exception("数値の末尾が無効です: '" + suffix + "'");
         }
 
-        return MojangsonNumber.upcastedValueOf(parser.apply(number));
+        return MojangsonNumber.upcastValueOf(parser.apply(number));
     }
 
     private MojangsonCompound compound() {
@@ -536,8 +547,13 @@ public class MojangsonParser {
             else if (next(BOOLEANS[1])) {
                 return MojangsonByte.valueOf((byte) 1);
             }
-            else if (next(MojangsonNull.NULL.toString())) {
-                return MojangsonNull.NULL;
+            else if (next(NULL)) {
+                if (useNull) {
+                    return MojangsonNull.NULL;
+                }
+                else {
+                    return MojangsonString.valueOf(NULL);
+                }
             }
 
             final String string = string();
@@ -558,6 +574,12 @@ public class MojangsonParser {
         return value;
     }
 
+    /**
+     * 引数に渡された文字列をmojangsonとしてパースします。
+     * @param text mojangson
+     * @return mojangson値
+     * @throws MojangsonParseException mojangsonが無効な場合。
+     */
     public <T extends MojangsonValue<?>> T parse(String text, Class<T> clazz) {
         this.text = text;
         final MojangsonValue<?> value = parse();

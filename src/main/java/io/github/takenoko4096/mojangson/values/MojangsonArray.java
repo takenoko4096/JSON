@@ -22,6 +22,10 @@ public abstract class MojangsonArray<T, U extends MojangsonValue<?>> extends Moj
         else return has(length() + index);
     }
 
+    /**
+     * プリミティブ配列として取得します。
+     * @return プリミティブ配列。
+     */
     public abstract T toArray();
 
     protected MojangsonList getView(TriConsumer<T, Integer, Object> setter) {
