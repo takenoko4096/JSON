@@ -20,7 +20,7 @@ val signingKey: String by project
 val signingPassword: String by project
 
 signing {
-    useInMemoryPgpKeys(signingKey, signingPassword)
+    useInMemoryPgpKeys(signingKey.replace("\\n", "\n"), signingPassword)
 }
 
 tasks {
