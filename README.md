@@ -8,7 +8,7 @@ json <-> mojangson <-> nbt の相互変換
 <dependency>
     <groupId>io.github.takenoko4096</groupId>
     <artifactId>mojangson-bridge</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
@@ -20,7 +20,7 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.takenoko4096:mojangson-bridge:0.1.0")
+    implementation("io.github.takenoko4096:mojangson-bridge:0.1.1")
 }
 ```
 
