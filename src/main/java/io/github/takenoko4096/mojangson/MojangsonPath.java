@@ -58,6 +58,10 @@ public final class MojangsonPath {
 
         while (node.child != null) {
             MojangsonStructure nextStruct = checkedAccess(node, currentStruct, (a, b) -> {
+                if (a instanceof MojangsonCompound compound1 && !compound1.has((String) b)) {
+                    return null;
+                }
+
                 final MojangsonValue<?> value = switch (a) {
                     case MojangsonCompound obj -> obj.get((String) b, obj.getTypeOf((String) b));
                     case MojangsonList arr -> arr.get((Integer) b, arr.getTypeAt((Integer) b));

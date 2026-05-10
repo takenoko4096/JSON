@@ -228,11 +228,11 @@ public class MojangsonSerializer {
     }
 
     /**
-     * mojangson構造を文字列としてシリアライズします。
+     * mojangson構造を文字列としてシリアライズします。asJson = false。
      * @param structure mojangson構造体。
      * @return 改行・空白文字によるインデントを含む文字列。
      */
     public static String structure(MojangsonStructure structure) throws MojangsonSerializationException {
-        return structure(structure, true);
+        return structure(structure, false);
     }
 }
