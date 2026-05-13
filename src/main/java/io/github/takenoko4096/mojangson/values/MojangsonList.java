@@ -251,9 +251,9 @@ public class MojangsonList extends MojangsonValue<List<MojangsonValue<?>>> imple
     }
 
     /**
-     * IterableをMojangsonArrayに変換します。
+     * IterableをMojangsonListに変換します。
      * @param iterable Iterable。
-     * @return MojangsonArray。
+     * @return MojangsonList。
      */
     public static MojangsonList valueOf(Iterable<?> iterable) {
         final List<MojangsonValue<?>> list = new ArrayList<>();
